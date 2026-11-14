@@ -5,6 +5,7 @@ import stringsJson from '@/data/ui-strings.json'
 import { ASK_CONTENT_TYPE, type AnswerRow, type AskEvent, type AskMeta } from '@/lib/ask-protocol'
 import { isLinkOnly, permitCenter, type Requirement } from '@/lib/data'
 import { BUSINESS_TYPES, runRules, STAGES, TOPICS, type SelectedEntry } from '@/lib/rules'
+import { logQuestion } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -178,6 +179,8 @@ export async function POST(request: Request) {
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const send = (event: AskEvent) => controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`))
+      // The log write runs alongside the answer and is awaited before the stream closes.
+      let logged: Promise<unknown> = Promise.resolve()
       try {
         // 1. EXTRACT
         const extraction = await extract(question)
@@ -205,6 +208,19 @@ export async function POST(request: Request) {
           declined,
         }
         send(meta)
+
+        // Usage log: English question and classification only, no raw user text or personal data.
+        logged = logQuestion({
+          time: new Date().toISOString(),
+          english_question: extraction.english_question.slice(0, MAX_QUESTION_LENGTH),
+          language: lang,
+          business_type: extraction.business_type,
+          stage: extraction.stage,
+          intent: extraction.intent,
+          entry_ids: selected.map(({ entry }) => entry.id),
+          gap,
+          declined,
+        }).catch((error) => console.error('[api/ask] log failed', error))
 
         // Declines and the fallback are fixed sentences, not model answers.
         if (declined || gap) {
@@ -260,6 +276,7 @@ export async function POST(request: Request) {
         console.error('[api/ask]', error)
         send({ type: 'error', message: 'The assistant is unavailable right now.' })
       } finally {
+        await logged
         controller.close()
       }
     },

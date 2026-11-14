@@ -2,7 +2,7 @@
 
 import { CalendarClock, ChevronDown, ExternalLink, Scale } from 'lucide-react'
 import type { Requirement } from '@/lib/data'
-import { handleFeedback } from '@/lib/feedback'
+import { handleFeedback, type FeedbackContext } from '@/lib/feedback'
 import { useI18n } from '@/lib/i18n'
 import { ContactDetails } from '@/components/contact-details'
 import { FeedbackControl } from '@/components/feedback-control'
@@ -11,9 +11,11 @@ type RequirementCardProps = {
   requirement: Requirement
   headingLevel?: 3 | 4
   showFeedback?: boolean
+  /** Business type and stage the card is shown under, recorded with feedback. */
+  feedbackContext?: FeedbackContext
 }
 
-export function RequirementCard({ requirement: req, headingLevel = 4, showFeedback = true }: RequirementCardProps) {
+export function RequirementCard({ requirement: req, headingLevel = 4, showFeedback = true, feedbackContext }: RequirementCardProps) {
   const { t } = useI18n()
   const Heading = headingLevel === 3 ? 'h3' : 'h4'
   const titleId = `req-${req.id}`
@@ -114,7 +116,7 @@ export function RequirementCard({ requirement: req, headingLevel = 4, showFeedba
             </>
           )}
         </p>
-        {showFeedback && <FeedbackControl target={`requirement:${req.id}`} onSubmit={handleFeedback} />}
+        {showFeedback && <FeedbackControl target={`requirement:${req.id}`} onSubmit={handleFeedback} context={feedbackContext} />}
       </footer>
     </article>
   )

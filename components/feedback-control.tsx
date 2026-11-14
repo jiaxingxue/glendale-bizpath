@@ -3,24 +3,35 @@
 import { useId, useState } from 'react'
 import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import { lifecycleConfig } from '@/lib/data'
-import type { FeedbackRecord } from '@/lib/feedback'
+import type { FeedbackContext, FeedbackRecord } from '@/lib/feedback'
 import { useI18n } from '@/lib/i18n'
 
 type FeedbackControlProps = {
   target: string
   onSubmit: (record: FeedbackRecord) => void
+  /** Business type and lifecycle stage the feedback was given in, for the staff dashboard. */
+  context?: FeedbackContext
 }
 
 type Status = 'idle' | 'negative' | 'sent'
 
-export function FeedbackControl({ target, onSubmit }: FeedbackControlProps) {
+export function FeedbackControl({ target, onSubmit, context }: FeedbackControlProps) {
   const { t, lang } = useI18n()
   const id = useId()
   const [status, setStatus] = useState<Status>('idle')
   const [comment, setComment] = useState('')
 
   function submit(helpful: boolean, reason: string | null) {
-    onSubmit({ target, helpful, reason, comment: comment.trim(), lang, createdAt: new Date().toISOString() })
+    onSubmit({
+      target,
+      thumbs: helpful ? 'up' : 'down',
+      reason,
+      comment: comment.trim(),
+      language: lang,
+      business_type: context?.business_type ?? null,
+      stage: context?.stage ?? null,
+      time: new Date().toISOString(),
+    })
     setStatus('sent')
   }
 

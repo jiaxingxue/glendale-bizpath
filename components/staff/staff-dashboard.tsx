@@ -2,15 +2,14 @@
 
 import useSWR from 'swr'
 import { Download, ExternalLink } from 'lucide-react'
-import type { FeedbackStore } from '@/lib/feedback'
 import { lifecycleConfig } from '@/lib/data'
-import { computeStaffStats, requirementFromTarget, type Count, type ReviewEntry } from '@/lib/staff-stats'
+import { requirementFromTarget, type Count, type ReviewEntry, type StaffStats } from '@/lib/staff-stats'
 import { useI18n } from '@/lib/i18n'
 import { KpiCard } from '@/components/staff/kpi-card'
 import { DataTable } from '@/components/staff/data-table'
 import { BarChart } from '@/components/staff/bar-chart'
 
-const fetchJson = async (url: string): Promise<FeedbackStore> => {
+const fetchJson = async (url: string): Promise<StaffStats> => {
   const res = await fetch(url)
   if (!res.ok) throw new Error(`Request failed: ${res.status}`)
   return res.json()
@@ -35,7 +34,7 @@ function SourceLink({ url }: { url: string }) {
 export function StaffDashboard({ needsReview }: { needsReview: ReviewEntry[] }) {
   const { t } = useI18n()
   const { data, error, isLoading } = useSWR('/api/feedback', fetchJson)
-  const stats = data ? computeStaffStats(data) : null
+  const stats = data ?? null
   const hasQuestions = (stats?.questionsAsked ?? 0) > 0
 
   const typeLabel = (id: string) => {

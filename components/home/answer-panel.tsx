@@ -183,7 +183,11 @@ export function AnswerPanel({ question, answer, streaming = false, visitHref, on
           <ClipboardList className="size-4" aria-hidden="true" />
           {t('type.prepare')}
         </LangLink>
-        <FeedbackControl target="answer" onSubmit={handleFeedback} />
+        <FeedbackControl
+          target="answer"
+          onSubmit={handleFeedback}
+          context={{ business_type: answer.businessType, stage: answer.stage }}
+        />
       </div>
 
       <form

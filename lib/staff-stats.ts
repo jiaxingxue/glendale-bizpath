@@ -1,6 +1,7 @@
 import { corpus, type Requirement } from '@/lib/data'
 import {
   HARD_TO_UNDERSTAND_REASON,
+  NEED_PERSON_REASON,
   REQUIREMENT_TARGET_PREFIX,
   type FeedbackStore,
 } from '@/lib/feedback'
@@ -51,11 +52,18 @@ export function requirementFromTarget(target: string) {
   return requirementsById.get(target.slice(REQUIREMENT_TARGET_PREFIX.length))
 }
 
-export function computeStaffStats({ questions, feedback }: FeedbackStore) {
-  const requirementFeedback = feedback.filter((item) => requirementFromTarget(item.target))
-  const negative = requirementFeedback.filter((item) => !item.helpful)
+const VERIFIED = 'verified'
 
-  const topQuestions = tally(questions, (q) => `${q.question_en}\u0000${q.lang}`).map(({ key, count }) => {
+/** True when the answer cited at least one entry marked verified in the corpus. */
+function hasVerifiedSource(entryIds: string[]) {
+  return entryIds.some((id) => requirementsById.get(id)?.confidence === VERIFIED)
+}
+
+export function computeStaffStats({ questions, feedback, handoffs }: FeedbackStore) {
+  const requirementFeedback = feedback.filter((item) => requirementFromTarget(item.target))
+  const negative = requirementFeedback.filter((item) => item.thumbs === 'down')
+
+  const topQuestions = tally(questions, (q) => `${q.english_question}\u0000${q.language}`).map(({ key, count }) => {
     const [question, lang] = key.split('\u0000')
     return { question, lang, count }
   })
@@ -73,22 +81,30 @@ export function computeStaffStats({ questions, feedback }: FeedbackStore) {
     return { target, reason, count }
   })
 
+  const needPerson = feedback.filter((item) => item.reason === NEED_PERSON_REASON).length
+
   return {
     questionsAsked: questions.length,
-    verifiedSourceRate: percent(questions.filter((q) => q.sources.length > 0).length, questions.length),
-    legalAdviceDeclined: questions.filter((q) => q.declined_legal_advice).length,
-    handedOff: questions.filter((q) => q.handed_off).length,
-    thumbsUpRate: percent(feedback.filter((item) => item.helpful).length, feedback.length),
+    /** Answered (not declined) with at least one verified corpus entry. */
+    verifiedSourceRate: percent(
+      questions.filter((q) => !q.declined && hasVerifiedSource(q.entry_ids)).length,
+      questions.length,
+    ),
+    legalAdviceDeclined: questions.filter((q) => q.intent === 'legal_advice').length,
+    /** "Need a person" feedback plus visit sheets opened. */
+    handedOff: needPerson + handoffs.length,
+    thumbsUpRate: percent(feedback.filter((item) => item.thumbs === 'up').length, feedback.length),
     topQuestions,
+    /** No verified source, or a legal question the City may want to cover with published guidance. */
     contentGaps: tally(
-      questions.filter((q) => q.sources.length === 0),
-      (q) => q.question_en,
+      questions.filter((q) => q.gap || q.intent === 'legal_advice'),
+      (q) => q.english_question,
     ),
     hardToUnderstand,
     flagged,
-    byLanguage: tally(questions, (q) => q.lang || UNKNOWN),
-    byBusinessType: tally(questions, (q) => q.business_type ?? UNKNOWN),
-    byStage: tally(questions, (q) => q.stage ?? UNKNOWN),
+    byLanguage: tally(questions, (q) => q.language || UNKNOWN),
+    byBusinessType: tally(questions, (q) => q.business_type || UNKNOWN),
+    byStage: tally(questions, (q) => q.stage || UNKNOWN),
   }
 }
 

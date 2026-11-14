@@ -46,7 +46,7 @@ export function NoticeResult({ explanation }: { explanation: NoticeExplanation }
         </div>
       )}
 
-      <FeedbackControl target={`notice:${explanation.requirementId}`} onSubmit={handleFeedback} />
+      <FeedbackControl target={`notice:${explanation.requirementId}`} onSubmit={handleFeedback} context={{ stage: 'notice' }} />
     </section>
   )
 }

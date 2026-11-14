@@ -131,7 +131,11 @@ export function TypeGuide({ typeId, stageId }: { typeId: string; stageId: string
                         {!isLast && <span className="w-0.5 flex-1 bg-border" aria-hidden="true" />}
                       </div>
                       <div className={isLast ? 'min-w-0 flex-1' : 'min-w-0 flex-1 pb-6'}>
-                        <RequirementCard requirement={req} headingLevel={4} />
+                        <RequirementCard
+                          requirement={req}
+                          headingLevel={4}
+                          feedbackContext={{ business_type: type.id, stage: group.stage.id }}
+                        />
                       </div>
                     </li>
                   )
