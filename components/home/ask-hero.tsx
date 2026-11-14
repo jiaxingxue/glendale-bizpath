@@ -1,35 +1,40 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { ArrowRight } from 'lucide-react'
-import { askAssistant, explainNotice } from '@/lib/assistant'
+import { askAssistant, explainNotice, type AssistantAnswer, type NoticeExplanation } from '@/lib/assistant'
 import { getStage, lifecycleConfig } from '@/lib/data'
 import { useI18n } from '@/lib/i18n'
+import { visitHref } from '@/lib/visit'
+import { AskForm } from '@/components/ask-form'
 import { StagePanel } from '@/components/home/stage-panel'
 import { AnswerPanel } from '@/components/home/answer-panel'
+import { NoticeResult } from '@/components/home/notice-result'
+
+type Result =
+  | { kind: 'answer'; question: string; answer: AssistantAnswer }
+  | { kind: 'notice'; explanation: NoticeExplanation }
 
 export function AskHero() {
   const { t, lang } = useI18n()
   const inputRef = useRef<HTMLInputElement>(null)
   const [question, setQuestion] = useState('')
   const [stageId, setStageId] = useState<string | null>(null)
-  const [answerVisible, setAnswerVisible] = useState(false)
+  const [result, setResult] = useState<Result | null>(null)
   const stage = getStage(stageId ?? undefined)
 
-  async function handleAsk(e: React.FormEvent) {
-    e.preventDefault()
-    const trimmed = question.trim()
+  async function ask(text: string) {
+    const trimmed = text.trim()
     if (!trimmed) {
       inputRef.current?.focus()
       return
     }
-    setAnswerVisible(true)
-    await askAssistant(trimmed, lang)
+    const answer = await askAssistant(trimmed, lang)
+    setResult({ kind: 'answer', question: trimmed, answer })
   }
 
   async function handleExplainNotice(text: string, image: File | null) {
-    setAnswerVisible(true)
-    await explainNotice({ text, image, lang })
+    const explanation = await explainNotice({ text, image, lang })
+    setResult({ kind: 'notice', explanation })
   }
 
   function fillExample(text: string) {
@@ -45,34 +50,7 @@ export function AskHero() {
           {t('hero.title')}
         </h1>
 
-        <form onSubmit={handleAsk} className="flex flex-col gap-3">
-          <label htmlFor="ask-input" className="sr-only">
-            {t('ask.label')}
-          </label>
-          <div className="flex flex-col gap-2 rounded-2xl bg-card p-2 sm:flex-row">
-            <input
-              id="ask-input"
-              ref={inputRef}
-              type="text"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              placeholder={t('ask.placeholder')}
-              autoComplete="off"
-              aria-describedby="ask-note"
-              className="h-14 min-w-0 flex-1 rounded-xl bg-card px-4 text-base text-card-foreground placeholder:text-muted-foreground focus-visible:outline-primary md:text-lg"
-            />
-            <button
-              type="submit"
-              className="inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-accent px-7 text-lg font-semibold text-accent-foreground hover:bg-accent/90 focus-visible:outline-primary"
-            >
-              {t('ask.button')}
-              <ArrowRight className="size-5 rtl:rotate-180" aria-hidden="true" />
-            </button>
-          </div>
-          <p id="ask-note" className="text-sm leading-relaxed text-brand-muted">
-            {t('ask.note')}
-          </p>
-        </form>
+        <AskForm id="ask-input" value={question} onChange={setQuestion} onSubmit={() => ask(question)} inputRef={inputRef} />
 
         <fieldset className="flex flex-col gap-3">
           <legend className="mb-3 text-sm font-medium text-brand-foreground">{t('stages.label')}</legend>
@@ -103,7 +81,15 @@ export function AskHero() {
           {stage && <StagePanel stage={stage} onExample={fillExample} onExplainNotice={handleExplainNotice} />}
         </div>
 
-        {answerVisible && <AnswerPanel />}
+        {result?.kind === 'answer' && (
+          <AnswerPanel
+            question={result.question}
+            answer={result.answer}
+            visitHref={visitHref({ stage: stageId, question: result.question })}
+            onFollowUp={ask}
+          />
+        )}
+        {result?.kind === 'notice' && <NoticeResult explanation={result.explanation} />}
       </div>
     </section>
   )

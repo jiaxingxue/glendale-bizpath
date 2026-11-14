@@ -5,7 +5,11 @@
     "summary": "PLACEHOLDER. Register your business with the City and keep the license current every year.",
     "issuer": "City of Glendale — Finance Department (placeholder)",
     "fee": "PLACEHOLDER — varies by business type",
-    "documents": ["Government-issued ID", "Business address", "Federal EIN or SSN for sole owners"],
+    "documents": [
+      "Government-issued ID",
+      "Business address",
+      "Federal EIN or SSN for sole owners"
+    ],
     "contact": {
       "desk": "Business License Section (placeholder)",
       "address": "PLACEHOLDER street address, Glendale, CA",
@@ -19,10 +23,19 @@
     "law_url": "https://example.org/law/business-license",
     "verified": "",
     "confidence": "placeholder",
-    "business_types": ["all"],
-    "stages": ["start", "location", "renew"],
+    "business_types": [
+      "all"
+    ],
+    "stages": [
+      "start",
+      "location",
+      "renew"
+    ],
     "order": 1,
-    "deadlines": ["PLACEHOLDER — before you start operating", "PLACEHOLDER — renew yearly"],
+    "deadlines": [
+      "PLACEHOLDER — before you start operating",
+      "PLACEHOLDER — renew yearly"
+    ],
     "applies_because": "PLACEHOLDER. Every business operating in the city needs to register."
   },
   {
@@ -31,7 +44,11 @@
     "summary": "PLACEHOLDER. Food businesses need a health permit and must pass inspection before opening.",
     "issuer": "County public health department (placeholder)",
     "fee": "PLACEHOLDER — based on facility size",
-    "documents": ["Approved floor plan", "Food handler certificates", "Menu"],
+    "documents": [
+      "Approved floor plan",
+      "Food handler certificates",
+      "Menu"
+    ],
     "contact": {
       "desk": "Environmental Health (placeholder)",
       "address": "PLACEHOLDER street address",
@@ -45,10 +62,19 @@
     "law_url": "https://example.org/law/health-permit",
     "verified": "",
     "confidence": "placeholder",
-    "business_types": ["food"],
-    "stages": ["start", "location", "notice", "renew"],
+    "business_types": [
+      "food"
+    ],
+    "stages": [
+      "start",
+      "location",
+      "notice",
+      "renew"
+    ],
     "order": 2,
-    "deadlines": ["PLACEHOLDER — before serving food to the public"],
+    "deadlines": [
+      "PLACEHOLDER — before serving food to the public"
+    ],
     "applies_because": "PLACEHOLDER. You prepare, store or serve food to customers."
   },
   {
@@ -57,7 +83,10 @@
     "summary": "PLACEHOLDER. Running a business from your home may require a home occupation permit.",
     "issuer": "City of Glendale — Planning (placeholder)",
     "fee": "PLACEHOLDER",
-    "documents": ["Description of business activity", "Proof of residence"],
+    "documents": [
+      "Description of business activity",
+      "Proof of residence"
+    ],
     "contact": {
       "desk": "Planning Counter (placeholder)",
       "address": "PLACEHOLDER street address, Glendale, CA",
@@ -71,10 +100,17 @@
     "law_url": "https://example.org/law/home-occupation",
     "verified": "",
     "confidence": "placeholder",
-    "business_types": ["home"],
-    "stages": ["start", "location"],
+    "business_types": [
+      "home"
+    ],
+    "stages": [
+      "start",
+      "location"
+    ],
     "order": 3,
-    "deadlines": ["PLACEHOLDER — before starting business activity at home"],
+    "deadlines": [
+      "PLACEHOLDER — before starting business activity at home"
+    ],
     "applies_because": "PLACEHOLDER. Your business address is also where you live."
   },
   {
@@ -97,10 +133,45 @@
     "law_url": "",
     "verified": "",
     "confidence": "placeholder",
-    "business_types": ["all"],
-    "stages": ["funding", "start"],
+    "business_types": [
+      "all"
+    ],
+    "stages": [
+      "funding",
+      "start"
+    ],
     "order": 4,
     "deadlines": [],
     "applies_because": "PLACEHOLDER. Optional help available to any business."
+  },
+  {
+    "id": "sign-permit",
+    "title": "Sign permit",
+    "summary": "",
+    "issuer": "City of Glendale — Planning (placeholder)",
+    "fee": "",
+    "documents": [],
+    "contact": {
+      "desk": "Permit Services Center (placeholder)",
+      "address": "PLACEHOLDER street address, Glendale, CA",
+      "hours": "PLACEHOLDER — Mon–Thu, 7:30–4:30",
+      "phone": "(000) 000-0000",
+      "email": "permits@example.org"
+    },
+    "apply_url": "",
+    "url": "https://example.org/sign-permit",
+    "code": "",
+    "law_url": "",
+    "verified": "",
+    "confidence": "link-only",
+    "business_types": [
+      "all"
+    ],
+    "stages": [
+      "location"
+    ],
+    "order": 5,
+    "deadlines": [],
+    "applies_because": ""
   }
 ]

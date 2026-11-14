@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { LangLink } from '@/components/lang-link'
 import { lifecycleConfig, requirementsForType } from '@/lib/data'
 import { useCountLabel, useI18n } from '@/lib/i18n'
 import { BusinessTypeIcon } from '@/components/business-type-icon'
@@ -22,7 +22,7 @@ export function BusinessTypeGrid() {
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {lifecycleConfig.business_types.map((type) => (
           <li key={type.id}>
-            <Link
+            <LangLink
               href={`/type/${type.id}`}
               className="group flex h-full flex-col gap-4 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary"
             >
@@ -37,7 +37,7 @@ export function BusinessTypeGrid() {
                 <p className="text-sm leading-relaxed text-muted-foreground">{t(type.sub_key)}</p>
               </div>
               <p className="text-sm font-medium text-primary">{countLabel(requirementsForType(type.id).length)}</p>
-            </Link>
+            </LangLink>
           </li>
         ))}
       </ul>

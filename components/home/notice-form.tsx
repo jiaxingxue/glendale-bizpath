@@ -2,12 +2,13 @@
 
 import { useRef, useState } from 'react'
 import { ImagePlus, X } from 'lucide-react'
+import { SAMPLE_NOTICE_TEXT } from '@/lib/assistant'
 import { useI18n } from '@/lib/i18n'
 
 export function NoticeForm({ onSubmit }: { onSubmit: (text: string, image: File | null) => void }) {
   const { t } = useI18n()
   const fileRef = useRef<HTMLInputElement>(null)
-  const [text, setText] = useState('')
+  const [text, setText] = useState(SAMPLE_NOTICE_TEXT)
   const [image, setImage] = useState<File | null>(null)
 
   function clearImage() {
@@ -27,9 +28,16 @@ export function NoticeForm({ onSubmit }: { onSubmit: (text: string, image: File 
       <h2 id="notice-title" className="text-lg">
         {t('notice.title')}
       </h2>
-      <label htmlFor="notice-text" className="text-sm font-medium">
-        {t('notice.label')}
-      </label>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <label htmlFor="notice-text" className="text-sm font-medium">
+          {t('notice.label')}
+        </label>
+        {text === SAMPLE_NOTICE_TEXT && (
+          <span className="rounded-full bg-warning px-2.5 py-0.5 text-xs font-medium text-warning-foreground">
+            {t('notice.sample')}
+          </span>
+        )}
+      </div>
       <textarea
         id="notice-text"
         value={text}

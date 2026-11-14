@@ -1,52 +1,76 @@
 'use client'
 
-import { ExternalLink, Scale } from 'lucide-react'
+import { CalendarClock, ChevronDown, ExternalLink, Scale } from 'lucide-react'
 import type { Requirement } from '@/lib/data'
+import { handleFeedback } from '@/lib/feedback'
 import { useI18n } from '@/lib/i18n'
 import { ContactDetails } from '@/components/contact-details'
+import { FeedbackControl } from '@/components/feedback-control'
 
-export function RequirementCard({ requirement: req, step }: { requirement: Requirement; step: number }) {
+type RequirementCardProps = {
+  requirement: Requirement
+  headingLevel?: 3 | 4
+  showFeedback?: boolean
+}
+
+export function RequirementCard({ requirement: req, headingLevel = 4, showFeedback = true }: RequirementCardProps) {
   const { t } = useI18n()
+  const Heading = headingLevel === 3 ? 'h3' : 'h4'
+  const titleId = `req-${req.id}`
 
   return (
-    <article className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-5 md:p-6" aria-labelledby={`req-${req.id}`}>
+    <article
+      lang="en"
+      className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-5 text-card-foreground md:p-6"
+      aria-labelledby={titleId}
+    >
       <header className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-          <span className="rounded-full bg-brand px-2.5 py-1 text-brand-foreground">{t('type.step', { n: step })}</span>
-          <span
-            className={`rounded-full px-2.5 py-1 ${
-              req.verified ? 'bg-success text-success-foreground' : 'bg-warning text-warning-foreground'
-            }`}
-          >
-            {req.verified ? t('req.verified', { date: req.verified }) : t('req.unverified')}
-          </span>
-          {req.confidence && (
-            <span className="rounded-full bg-muted px-2.5 py-1 text-muted-foreground">
-              {t('req.confidence', { value: req.confidence })}
-            </span>
-          )}
-        </div>
-        <h3 id={`req-${req.id}`} className="text-xl text-balance">
+        <Heading id={titleId} className="text-xl text-balance">
           {req.title}
-        </h3>
-        <p className="leading-relaxed text-muted-foreground">{req.summary}</p>
+        </Heading>
+        {req.summary && <p className="leading-relaxed text-muted-foreground text-pretty">{req.summary}</p>}
       </header>
 
-      <dl className="grid gap-4 text-sm leading-relaxed sm:grid-cols-2">
-        <Field label={t('req.issuer')} value={req.issuer} />
-        <Field label={t('req.fee')} value={req.fee} />
-        {req.applies_because && <Field label={t('req.why')} value={req.applies_because} wide />}
-        {req.documents.length > 0 && <ListField label={t('req.documents')} items={req.documents} />}
-        {req.deadlines.length > 0 && <ListField label={t('req.deadlines')} items={req.deadlines} />}
+      <dl className="grid gap-4 rounded-xl border border-border p-4 text-sm leading-relaxed sm:grid-cols-3">
+        <Field label={t('req.fee')}>{req.fee || '—'}</Field>
+        <Field label={t('req.documents')}>
+          {req.documents.length > 0 ? (
+            <ul className="list-disc ps-4">
+              {req.documents.map((doc) => (
+                <li key={doc}>{doc}</li>
+              ))}
+            </ul>
+          ) : (
+            '—'
+          )}
+        </Field>
+        <Field label={t('req.issuer')}>{req.issuer || '—'}</Field>
       </dl>
 
+      {req.deadlines.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <p className="text-sm font-medium text-muted-foreground">{t('req.deadlines')}</p>
+          <ul className="flex flex-wrap gap-2">
+            {req.deadlines.map((deadline) => (
+              <li
+                key={deadline}
+                className="inline-flex items-center gap-1.5 rounded-full bg-warning px-3 py-1 text-xs font-medium text-warning-foreground"
+              >
+                <CalendarClock className="size-3.5" aria-hidden="true" />
+                {deadline}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="flex flex-col gap-2 rounded-xl bg-muted p-4">
-        <h4 className="font-heading font-semibold">{t('req.contact')}</h4>
-        <p className="text-sm font-medium">{req.contact.desk}</p>
+        <p className="text-sm font-medium text-muted-foreground">{t('req.contact')}</p>
+        <p className="font-medium">{req.contact.desk}</p>
         <ContactDetails contact={req.contact} />
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         {req.apply_url && (
           <a
             href={req.apply_url}
@@ -58,55 +82,73 @@ export function RequirementCard({ requirement: req, step }: { requirement: Requi
             <ExternalLink className="size-4" aria-hidden="true" />
           </a>
         )}
-        {req.url && (
-          <a
-            href={req.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-sm font-medium text-primary underline underline-offset-4"
-          >
-            {t('req.source')}
-            <ExternalLink className="size-4" aria-hidden="true" />
-          </a>
-        )}
-        {req.law_url && (
-          <a
-            href={req.law_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl px-2 text-sm font-medium text-primary underline underline-offset-4"
-          >
-            <Scale className="size-4" aria-hidden="true" />
-            {t('req.law')}
-            {req.code && `: ${req.code}`}
-          </a>
+        {req.code && (
+          <LawLink code={req.code} url={req.law_url} />
         )}
       </div>
+
+      {req.applies_because && (
+        <details className="group rounded-xl border border-border">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 px-4 text-sm font-medium text-primary [&::-webkit-details-marker]:hidden">
+            {t('req.why')}
+            <ChevronDown className="size-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+          </summary>
+          <p className="px-4 pb-4 text-sm leading-relaxed">{req.applies_because}</p>
+        </details>
+      )}
+
+      <footer className="flex flex-col gap-3 border-t border-border pt-4 sm:flex-row sm:items-start sm:justify-between">
+        <p className="text-sm text-muted-foreground">
+          {req.verified ? t('req.last_verified', { date: req.verified }) : t('req.never_verified')}
+          {req.url && (
+            <>
+              {' · '}
+              <a
+                href={req.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-primary underline underline-offset-4"
+              >
+                {t('req.city_source')}
+              </a>
+            </>
+          )}
+        </p>
+        {showFeedback && <FeedbackControl target={`requirement:${req.id}`} onSubmit={handleFeedback} />}
+      </footer>
     </article>
   )
 }
 
-function Field({ label, value, wide }: { label: string; value: string; wide?: boolean }) {
-  if (!value) return null
+export function LawLink({ code, url }: { code: string; url: string }) {
+  const { t } = useI18n()
+  const content = (
+    <>
+      <Scale className="size-4 shrink-0" aria-hidden="true" />
+      <span>
+        {t('req.law')}
+        <span className="ms-1.5 rounded bg-secondary px-1.5 py-0.5 font-mono text-xs text-secondary-foreground">{code}</span>
+      </span>
+    </>
+  )
+  if (!url) return <span className="inline-flex items-center gap-2 text-sm font-medium">{content}</span>
   return (
-    <div className={`flex flex-col gap-0.5 ${wide ? 'sm:col-span-2' : ''}`}>
-      <dt className="font-medium text-muted-foreground">{label}</dt>
-      <dd>{value}</dd>
-    </div>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary underline underline-offset-4"
+    >
+      {content}
+    </a>
   )
 }
 
-function ListField({ label, items }: { label: string; items: string[] }) {
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-0.5">
+    <div className="flex flex-col gap-1">
       <dt className="font-medium text-muted-foreground">{label}</dt>
-      <dd>
-        <ul className="list-disc ps-5">
-          {items.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </dd>
+      <dd>{children}</dd>
     </div>
   )
 }

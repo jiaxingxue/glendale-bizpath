@@ -33,7 +33,7 @@ export type Requirement = {
 export type Stage = {
   id: string
   label_key: string
-  examples: string[]
+  examples: Record<string, string[]>
   guides: string[]
 }
 
@@ -48,11 +48,14 @@ export type LifecycleConfig = {
   business_types: BusinessType[]
   coverage: Record<string, string>
   feedback_reasons: string[]
+  permit_center: Contact
 }
 
 /** Requirements tagged with this id apply to every business type. */
 const ALL_TYPES = 'all'
 const FUNDING_STAGE = 'funding'
+const LINK_ONLY = 'link-only'
+const FALLBACK_LANGUAGE = 'en'
 
 export const corpus = corpusJson as Requirement[]
 export const lifecycleConfig = configJson as LifecycleConfig
@@ -72,6 +75,35 @@ export function requirementsForType(typeId: string, stageId?: string) {
     .filter((req) => !stageId || req.stages.includes(stageId))
     .sort((a, b) => a.order - b.order)
 }
+
+export function isLinkOnly(req: Requirement) {
+  return req.confidence === LINK_ONLY
+}
+
+export function stageExamples(stage: Stage, lang: string) {
+  const localized = stage.examples[lang]
+  return localized && localized.length > 0 ? localized : (stage.examples[FALLBACK_LANGUAGE] ?? [])
+}
+
+export type StageGroup = { stage: Stage; requirements: Requirement[] }
+
+/**
+ * Groups requirements by lifecycle stage in config order. A requirement that spans several
+ * stages is listed once, under the earliest stage (or the filtered stage when one is selected).
+ */
+export function groupByStage(requirements: Requirement[], stageId?: string): StageGroup[] {
+  const stages = stageId ? lifecycleConfig.stages.filter((s) => s.id === stageId) : lifecycleConfig.stages
+  const placed = new Set<string>()
+  return stages
+    .map((stage) => {
+      const items = requirements.filter((req) => req.stages.includes(stage.id) && !placed.has(req.id))
+      for (const req of items) placed.add(req.id)
+      return { stage, requirements: items }
+    })
+    .filter((group) => group.requirements.length > 0)
+}
+
+export const permitCenter = lifecycleConfig.permit_center
 
 export function coverageFor(typeId: string): 'verified' | 'baseline' {
   return lifecycleConfig.coverage[typeId] === 'verified' ? 'verified' : 'baseline'
