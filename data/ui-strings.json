@@ -267,7 +267,19 @@
     "type.steps": "Քայլեր",
     "type.prepare": "Պատրաստել այցս",
     "req.english_note": "Պահանջների մանրամասները ներկայացված են անգլերենով՝ պաշտոնական աղբյուրների լեզվով։",
-    "legal.short": "Իրավական տեղեկատվություն, ոչ թե իրավաբանական խորհրդատվություն։"
+    "legal.short": "Իրավական տեղեկատվություն, ոչ թե իրավաբանական խորհրդատվություն։",
+    "feedback.wrong": "Սխալ կամ հնացած",
+    "feedback.unclear": "Դժվար հասկանալի",
+    "feedback.unanswered": "Չպատասխանեց իմ հարցին",
+    "feedback.person": "Մարդու օգնություն է պետք",
+    "feedback.question": "Պա՞րզ էր",
+    "feedback.leave": "Թողնել կարծիք",
+    "answer.next": "Հաջորդ քայլերը",
+    "answer.show_en": "Ցույց տալ անգլերենը",
+    "answer.mt": "Մեքենայական թարգմանություն — գերակայում է անգլերեն տարբերակը։",
+    "person.title": "Խոսել մարդու հետ",
+    "deadlines.title": "Վերջնաժամկետներ",
+    "answer.applies": "Ինչ է վերաբերում ձեզ"
   },
   "es": {
     "banner": "Prototipo de hackatón · no es un sitio oficial de la Ciudad de Glendale",
@@ -404,6 +416,7 @@
     "visit.print": "Imprimir",
     "visit.email": "Enviarme por correo",
     "visit.email_subject": "Mi visita al Centro de Servicios de Permisos de Glendale",
-    "visit.no_fees": "No hay tarifas para esta situación."
+    "visit.no_fees": "No hay tarifas para esta situación.",
+    "deadlines.title": "Fechas límite"
   }
 }

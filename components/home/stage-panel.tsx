@@ -39,6 +39,7 @@ export function StagePanel({ stage, onExample, onExplainNotice }: StagePanelProp
           </ul>
         </div>
 
+        {guides.length > 0 && (
         <div className="flex flex-col gap-3">
           <h2 className="text-lg">{t('panel.guide')}</h2>
           <ul className="flex flex-col">
@@ -55,6 +56,7 @@ export function StagePanel({ stage, onExample, onExplainNotice }: StagePanelProp
             ))}
           </ul>
         </div>
+        )}
       </div>
 
       {stage.id === NOTICE_STAGE_ID && <NoticeForm onSubmit={onExplainNotice} />}

@@ -5,26 +5,24 @@
       "label_key": "stage.start",
       "examples": {
         "en": [
-          "What licenses do I need to open a café?",
-          "Can I run a business from my apartment?",
-          "How do I register a business name in Glendale?"
+          "I want to open a café on Brand Blvd. What do I need?",
+          "Can I run a bookkeeping business from my apartment?",
+          "How much is the Business Registration Certificate?"
         ],
         "hy": [
-          "Ինչ լիցենզիաներ են պետք սրճարան բացելու համար։",
-          "Կարո՞ղ եմ բիզնես վարել իմ բնակարանից։",
-          "Ինչպե՞ս գրանցել բիզնեսի անվանումը Գլենդելում։"
+          "Ուզում եմ սրճարան բացել Brand Blvd-ում։ Ի՞նչ է ինձ պետք։",
+          "Կարո՞ղ եմ հաշվապահական բիզնես վարել իմ բնակարանից։",
+          "Որքա՞ն արժե Business Registration Certificate-ը (բիզնեսի գրանցման վկայական)։"
         ],
         "es": [
-          "¿Qué licencias necesito para abrir una cafetería?",
-          "¿Puedo tener un negocio en mi apartamento?",
-          "¿Cómo registro el nombre de un negocio en Glendale?"
+          "Quiero abrir un café en Brand Blvd. ¿Qué necesito?",
+          "¿Puedo operar un negocio de contabilidad desde mi apartamento?",
+          "¿Cuánto cuesta el Business Registration Certificate (certificado de registro de negocio)?"
         ]
       },
       "guides": [
         "food",
-        "home",
-        "retail",
-        "other"
+        "home"
       ]
     },
     {
@@ -32,128 +30,100 @@
       "label_key": "stage.location",
       "examples": {
         "en": [
-          "Do I need a new permit if I move to a bigger storefront?",
-          "Can I put up a sign outside my shop?",
-          "What inspections happen before a new location opens?"
+          "I'm about to sign a lease for a shop. What should I check first?",
+          "I'm moving my business to a new address in Glendale. Do I need a new certificate?"
         ],
         "hy": [
-          "Պե՞տք է նոր թույլտվություն, եթե տեղափոխվեմ ավելի մեծ խանութ։",
-          "Կարո՞ղ եմ ցուցանակ տեղադրել խանութիս դրսում։",
-          "Ինչ ստուգումներ են անցկացվում նոր վայրի բացումից առաջ։"
+          "Պատրաստվում եմ խանութի վարձակալության պայմանագիր ստորագրել։ Ի՞նչ ստուգեմ նախ։",
+          "Բիզնեսս տեղափոխում եմ Գլենդեյլի նոր հասցե։ Նոր վկայակա՞ն է պետք։"
         ],
         "es": [
-          "¿Necesito un permiso nuevo si me mudo a un local más grande?",
-          "¿Puedo poner un letrero afuera de mi tienda?",
-          "¿Qué inspecciones se hacen antes de abrir un local nuevo?"
+          "Estoy por firmar un contrato de alquiler para una tienda. ¿Qué debo revisar primero?",
+          "Voy a mudar mi negocio a otra dirección en Glendale. ¿Necesito un certificado nuevo?"
         ]
       },
       "guides": [
         "food",
-        "retail",
-        "office",
-        "other"
+        "retail"
       ]
     },
     {
-      "id": "employees",
+      "id": "hire",
       "label_key": "stage.employees",
       "examples": {
         "en": [
-          "What do I need before I hire my first employee?",
-          "What is the minimum wage in Glendale?",
-          "Do I need workers' compensation insurance?"
+          "I'm hiring my first employee. What do I have to register for?",
+          "What is the minimum wage I have to pay in Glendale?"
         ],
         "hy": [
-          "Ինչ է պետք առաջին աշխատակցին վարձելուց առաջ։",
-          "Որքա՞ն է նվազագույն աշխատավարձը Գլենդելում։",
-          "Պե՞տք է արդյոք աշխատողների փոխհատուցման ապահովագրություն։"
+          "Վարձում եմ իմ առաջին աշխատողին։ Որտե՞ղ պետք է գրանցվեմ։",
+          "Որքա՞ն է նվազագույն աշխատավարձը, որ պետք է վճարեմ Գլենդեյլում։"
         ],
         "es": [
-          "¿Qué necesito antes de contratar a mi primer empleado?",
-          "¿Cuál es el salario mínimo en Glendale?",
-          "¿Necesito seguro de compensación para trabajadores?"
+          "Voy a contratar a mi primer empleado. ¿En qué me tengo que registrar?",
+          "¿Cuál es el salario mínimo que debo pagar en Glendale?"
         ]
       },
-      "guides": [
-        "food",
-        "personal",
-        "other"
-      ]
+      "guides": []
     },
     {
       "id": "notice",
       "label_key": "stage.notice",
       "examples": {
         "en": [
-          "What does a notice of violation mean?",
-          "I got a letter about unpaid business tax. What do I do?",
-          "How do I respond to a health inspection report?"
+          "We got a complaint that we give out forks with every takeout order. What's the rule?",
+          "Can I use foam takeout containers?"
         ],
         "hy": [
-          "Ինչ է նշանակում խախտման մասին ծանուցումը։",
-          "Նամակ եմ ստացել չվճարված բիզնես հարկի մասին։ Ի՞նչ անեմ։",
-          "Ինչպե՞ս արձագանքել առողջապահական ստուգման զեկույցին։"
+          "Բողոք ենք ստացել, որ ամեն պատվերի հետ պատառաքաղ ենք տալիս։ Ո՞րն է կանոնը։",
+          "Կարո՞ղ եմ օգտագործել փրփրապլաստե տարաներ։"
         ],
         "es": [
-          "¿Qué significa un aviso de infracción?",
-          "Recibí una carta sobre impuestos comerciales sin pagar. ¿Qué hago?",
-          "¿Cómo respondo a un informe de inspección sanitaria?"
+          "Recibimos una queja porque damos tenedores con cada pedido para llevar. ¿Cuál es la regla?",
+          "¿Puedo usar envases de espuma para llevar?"
         ]
       },
       "guides": [
-        "food",
-        "other"
+        "food"
       ]
     },
     {
-      "id": "renew",
+      "id": "comply",
       "label_key": "stage.renew",
       "examples": {
         "en": [
-          "When do I renew my business license?",
-          "What happens if I renew late?",
-          "How do I update my business address with the city?"
+          "When do I have to renew my Business Registration Certificate?",
+          "I'm changing my business name. Do I need to do anything with the City?"
         ],
         "hy": [
-          "Ե՞րբ պետք է երկարաձգել բիզնես լիցենզիաս։",
-          "Ինչ կլինի, եթե ուշ երկարաձգեմ։",
-          "Ինչպե՞ս թարմացնել բիզնեսի հասցեն քաղաքապետարանում։"
+          "Ե՞րբ պետք է նորացնեմ Business Registration Certificate-ը։",
+          "Փոխում եմ բիզնեսիս անունը։ Քաղաքապետարանում որևէ բան պե՞տք է անեմ։"
         ],
         "es": [
-          "¿Cuándo renuevo mi licencia comercial?",
-          "¿Qué pasa si renuevo tarde?",
-          "¿Cómo actualizo la dirección de mi negocio con la ciudad?"
+          "¿Cuándo tengo que renovar mi Business Registration Certificate?",
+          "Voy a cambiar el nombre de mi negocio. ¿Tengo que hacer algo con la Ciudad?"
         ]
       },
-      "guides": [
-        "food",
-        "lodging",
-        "other"
-      ]
+      "guides": []
     },
     {
       "id": "funding",
       "label_key": "stage.funding",
       "examples": {
         "en": [
-          "Are there grants for small businesses in Glendale?",
-          "Where can I get free business advice?",
-          "How do I find a small business loan?"
+          "Is there free advising for small businesses in Glendale?",
+          "Who can help me find and hire staff?"
         ],
         "hy": [
-          "Կա՞ն դրամաշնորհներ փոքր բիզնեսների համար Գլենդելում։",
-          "Որտե՞ղ կարող եմ անվճար բիզնես խորհրդատվություն ստանալ։",
-          "Ինչպե՞ս գտնել փոքր բիզնեսի վարկ։"
+          "Գլենդեյլում կա՞ անվճար խորհրդատվություն փոքր բիզնեսների համար։",
+          "Ո՞վ կարող է օգնել ինձ աշխատողներ գտնել և վարձել։"
         ],
         "es": [
-          "¿Hay subvenciones para pequeños negocios en Glendale?",
-          "¿Dónde puedo recibir asesoría gratuita para mi negocio?",
-          "¿Cómo encuentro un préstamo para pequeños negocios?"
+          "¿Hay asesoría gratuita para pequeños negocios en Glendale?",
+          "¿Quién me puede ayudar a encontrar y contratar personal?"
         ]
       },
-      "guides": [
-        "other"
-      ]
+      "guides": []
     }
   ],
   "business_types": [
@@ -173,7 +143,7 @@
       "sub_key": "type.retail.sub"
     },
     {
-      "id": "personal",
+      "id": "services",
       "label_key": "type.personal",
       "sub_key": "type.personal.sub"
     },
@@ -183,7 +153,7 @@
       "sub_key": "type.office.sub"
     },
     {
-      "id": "lodging",
+      "id": "hotel",
       "label_key": "type.lodging",
       "sub_key": "type.lodging.sub"
     },
@@ -197,22 +167,15 @@
     "food": "verified",
     "home": "verified",
     "retail": "baseline",
-    "personal": "baseline",
+    "services": "baseline",
     "office": "baseline",
-    "lodging": "baseline",
-    "other": "verified"
+    "hotel": "baseline",
+    "other": "baseline"
   },
   "feedback_reasons": [
     "feedback.wrong",
     "feedback.unclear",
     "feedback.unanswered",
     "feedback.person"
-  ],
-  "permit_center": {
-    "desk": "Permit Services Center (placeholder)",
-    "address": "PLACEHOLDER street address, Glendale, CA",
-    "hours": "PLACEHOLDER — Mon–Thu, 7:30–4:30",
-    "phone": "(000) 000-0000",
-    "email": "permits@example.org"
-  }
+  ]
 }

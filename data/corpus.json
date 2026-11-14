@@ -1,177 +1,484 @@
 [
-  {
-    "id": "business-license",
-    "title": "Business registration and business license",
-    "summary": "PLACEHOLDER. Register your business with the City and keep the license current every year.",
-    "issuer": "City of Glendale — Finance Department (placeholder)",
-    "fee": "PLACEHOLDER — varies by business type",
-    "documents": [
-      "Government-issued ID",
-      "Business address",
-      "Federal EIN or SSN for sole owners"
-    ],
-    "contact": {
-      "desk": "Business License Section (placeholder)",
-      "address": "PLACEHOLDER street address, Glendale, CA",
-      "hours": "PLACEHOLDER — Mon–Thu, 8:00–5:00",
-      "phone": "(000) 000-0000",
-      "email": "license@example.org"
-    },
-    "apply_url": "https://example.org/apply/business-license",
-    "url": "https://example.org/business-license",
-    "code": "PLACEHOLDER code section",
-    "law_url": "https://example.org/law/business-license",
-    "verified": "",
-    "confidence": "placeholder",
-    "business_types": [
-      "all"
-    ],
-    "stages": [
-      "start",
-      "location",
-      "renew"
-    ],
-    "order": 1,
-    "deadlines": [
-      "PLACEHOLDER — before you start operating",
-      "PLACEHOLDER — renew yearly"
-    ],
-    "applies_because": "PLACEHOLDER. Every business operating in the city needs to register."
+ {
+  "id": "prelease-visit",
+  "title": "Visit the Permit Services Center before you sign a lease",
+  "summary": "The City strongly encourages visiting the Permit Services Center before signing a lease, to learn the space's history and what improvements or permits it will need.",
+  "issuer": "City of Glendale – Permit Services Center",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Permit Services Center",
+   "address": "633 E. Broadway, Suite 101, Glendale",
+   "hours": "7 AM–12 PM",
+   "phone": "(818) 548-3200"
   },
-  {
-    "id": "health-permit",
-    "title": "Public health permit for food facilities",
-    "summary": "PLACEHOLDER. Food businesses need a health permit and must pass inspection before opening.",
-    "issuer": "County public health department (placeholder)",
-    "fee": "PLACEHOLDER — based on facility size",
-    "documents": [
-      "Approved floor plan",
-      "Food handler certificates",
-      "Menu"
-    ],
-    "contact": {
-      "desk": "Environmental Health (placeholder)",
-      "address": "PLACEHOLDER street address",
-      "hours": "PLACEHOLDER — Mon–Fri, 8:00–4:30",
-      "phone": "(000) 000-0000",
-      "email": "health@example.org"
-    },
-    "apply_url": "https://example.org/apply/health-permit",
-    "url": "https://example.org/health-permit",
-    "code": "PLACEHOLDER code section",
-    "law_url": "https://example.org/law/health-permit",
-    "verified": "",
-    "confidence": "placeholder",
-    "business_types": [
-      "food"
-    ],
-    "stages": [
-      "start",
-      "location",
-      "notice",
-      "renew"
-    ],
-    "order": 2,
-    "deadlines": [
-      "PLACEHOLDER — before serving food to the public"
-    ],
-    "applies_because": "PLACEHOLDER. You prepare, store or serve food to customers."
+  "apply_url": null,
+  "url": "https://www.glendaleca.gov/business/doing-business-with-the-city/starting-a-business-in-glendale",
+  "code": null,
+  "verified": "2026-11-13",
+  "confidence": "verified",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "other"
+  ],
+  "stages": [
+   "start",
+   "location"
+  ],
+  "order": 10,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "You are opening at a commercial location"
+ },
+ {
+  "id": "zoning-check",
+  "title": "Confirm your business type is allowed at the address",
+  "summary": "Certain business types cannot operate in certain zones. Check the Glendale Zoning and Parcel Map before applying. A Business Registration Certificate does not authorize a change of use.",
+  "issuer": "City of Glendale – Community Development",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Permit Services Center",
+   "address": "633 E. Broadway, Suite 101, Glendale",
+   "hours": "7 AM–12 PM",
+   "phone": "(818) 548-3200"
   },
-  {
-    "id": "home-occupation",
-    "title": "Home occupation permit",
-    "summary": "PLACEHOLDER. Running a business from your home may require a home occupation permit.",
-    "issuer": "City of Glendale — Planning (placeholder)",
-    "fee": "PLACEHOLDER",
-    "documents": [
-      "Description of business activity",
-      "Proof of residence"
-    ],
-    "contact": {
-      "desk": "Planning Counter (placeholder)",
-      "address": "PLACEHOLDER street address, Glendale, CA",
-      "hours": "PLACEHOLDER — Mon–Thu, 8:00–12:00",
-      "phone": "(000) 000-0000",
-      "email": "planning@example.org"
-    },
-    "apply_url": "https://example.org/apply/home-occupation",
-    "url": "https://example.org/home-occupation",
-    "code": "PLACEHOLDER code section",
-    "law_url": "https://example.org/law/home-occupation",
-    "verified": "",
-    "confidence": "placeholder",
-    "business_types": [
-      "home"
-    ],
-    "stages": [
-      "start",
-      "location"
-    ],
-    "order": 3,
-    "deadlines": [
-      "PLACEHOLDER — before starting business activity at home"
-    ],
-    "applies_because": "PLACEHOLDER. Your business address is also where you live."
+  "apply_url": null,
+  "url": "https://www.glendaleca.gov/government/departments/community-development/licenses-permits-and-applications/license-and-permit-applications/business-registration-certificate",
+  "code": null,
+  "verified": "2026-11-13",
+  "confidence": "verified",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "other"
+  ],
+  "stages": [
+   "start",
+   "location"
+  ],
+  "order": 20,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "You are opening at a commercial location"
+ },
+ {
+  "id": "brc-required",
+  "title": "Business Registration Certificate (BRC) required",
+  "summary": "Every business located in Glendale, including subleases, must hold a valid BRC, renewed annually and posted visibly. Any change in activities, square footage, name, ownership or address requires a new BRC.",
+  "issuer": "City of Glendale – Community Development, Neighborhood Services",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Permit Services Center",
+   "address": "633 E. Broadway, Suite 101, Glendale",
+   "hours": "7 AM–12 PM",
+   "phone": "(818) 548-3200"
   },
-  {
-    "id": "small-business-advising",
-    "title": "Free small business advising",
-    "summary": "PLACEHOLDER. No-cost one-on-one advising on planning, financing and growth.",
-    "issuer": "Small business development center (placeholder)",
-    "fee": "PLACEHOLDER — free",
-    "documents": [],
-    "contact": {
-      "desk": "Economic Development (placeholder)",
-      "address": "PLACEHOLDER street address, Glendale, CA",
-      "hours": "PLACEHOLDER — by appointment",
-      "phone": "(000) 000-0000",
-      "email": "business@example.org"
-    },
-    "apply_url": "https://example.org/apply/advising",
-    "url": "https://example.org/advising",
-    "code": "",
-    "law_url": "",
-    "verified": "",
-    "confidence": "placeholder",
-    "business_types": [
-      "all"
-    ],
-    "stages": [
-      "funding",
-      "start"
-    ],
-    "order": 4,
-    "deadlines": [],
-    "applies_because": "PLACEHOLDER. Optional help available to any business."
+  "apply_url": null,
+  "url": "https://www.glendaleca.gov/government/departments/community-development/licenses-permits-and-applications/license-and-permit-applications/business-registration-certificate",
+  "code": "GMC 5.04.030",
+  "verified": "2026-11-14",
+  "confidence": "verified",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "other"
+  ],
+  "stages": [
+   "start",
+   "location",
+   "comply"
+  ],
+  "order": 30,
+  "law_url": "https://ecode360.com/43342637",
+  "deadlines": [],
+  "applies_because": "Your business is located in Glendale (not home-based)"
+ },
+ {
+  "id": "brc-fee",
+  "title": "BRC fee, documents and renewal",
+  "summary": "Initial fee $496.39; annual renewal $128.77. Apply or renew through the GlendalePermits online portal with one of: a signed lease showing the property address, the grant deed, or the secured annual property tax bill. Subleases need a signed sublease agreement (and an owner letter if the owner is not listed on it). If the BRC is not obtained within 180 days of paying, the application is considered withdrawn. Renewal opens 30 days before expiration; if not renewed before expiration, a new BRC application is required.",
+  "issuer": "City of Glendale – Community Development, Neighborhood Services",
+  "fee": "$496.39 initial / $128.77 annual renewal",
+  "documents": "Lease, grant deed, or secured property tax bill; GlendalePermits account",
+  "contact": {
+   "desk": "Permit Services Center",
+   "address": "633 E. Broadway, Suite 101, Glendale",
+   "hours": "7 AM–12 PM",
+   "phone": "(818) 548-3200"
   },
-  {
-    "id": "sign-permit",
-    "title": "Sign permit",
-    "summary": "",
-    "issuer": "City of Glendale — Planning (placeholder)",
-    "fee": "",
-    "documents": [],
-    "contact": {
-      "desk": "Permit Services Center (placeholder)",
-      "address": "PLACEHOLDER street address, Glendale, CA",
-      "hours": "PLACEHOLDER — Mon–Thu, 7:30–4:30",
-      "phone": "(000) 000-0000",
-      "email": "permits@example.org"
-    },
-    "apply_url": "",
-    "url": "https://example.org/sign-permit",
-    "code": "",
-    "law_url": "",
-    "verified": "",
-    "confidence": "link-only",
-    "business_types": [
-      "all"
-    ],
-    "stages": [
-      "location"
-    ],
-    "order": 5,
-    "deadlines": [],
-    "applies_because": ""
-  }
+  "apply_url": "GlendalePermits portal (copy the exact URL from the City page)",
+  "url": "https://www.glendaleca.gov/government/departments/community-development/licenses-permits-and-applications/license-and-permit-applications/business-registration-certificate",
+  "code": null,
+  "verified": "2026-11-14",
+  "confidence": "verified",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "other"
+  ],
+  "stages": [
+   "start",
+   "comply"
+  ],
+  "order": 40,
+  "law_url": null,
+  "deadlines": [
+   "Obtain the certificate within 180 days of paying the application fee",
+   "Renew every year; renewal opens 30 days before expiration"
+  ],
+  "applies_because": "Your business is located in Glendale (not home-based)"
+ },
+ {
+  "id": "home-occ",
+  "title": "Home-based business: Home Occupation Permit (not a BRC)",
+  "summary": "Home businesses apply for a Home Occupation Permit through GlendalePermits instead of a BRC. You must live there; no signs (including on the mailbox); no employees working on the property; the activity must fit a residential neighborhood.",
+  "issuer": "City of Glendale – Community Development",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Home Occupation",
+   "email": "HomeOcc@glendaleca.gov",
+   "phone": "(818) 548-2140"
+  },
+  "apply_url": "GlendalePermits portal (copy the exact URL from the City page)",
+  "url": "https://www.glendaleca.gov/government/departments/community-development/development-services",
+  "code": null,
+  "verified": "2026-11-13",
+  "confidence": "verified",
+  "business_types": [
+   "home"
+  ],
+  "stages": [
+   "start"
+  ],
+  "order": 10,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "You run the business from where you live"
+ },
+ {
+  "id": "home-occ-floor",
+  "title": "Home occupation size limit",
+  "summary": "A home occupation generally may not occupy more than 10% of the dwelling's floor area (with exceptions, including California Homemade Food Act uses).",
+  "issuer": "City of Glendale – Community Development",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Home Occupation",
+   "email": "HomeOcc@glendaleca.gov",
+   "phone": "(818) 548-2140"
+  },
+  "apply_url": null,
+  "url": "https://ecode360.com/43354726",
+  "code": "GMC 30.45.030",
+  "verified": "2026-11-13",
+  "confidence": "verified",
+  "business_types": [
+   "home"
+  ],
+  "stages": [
+   "start"
+  ],
+  "order": 20,
+  "law_url": "https://ecode360.com/43354726",
+  "deadlines": [],
+  "applies_because": "You run the business from where you live"
+ },
+ {
+  "id": "lac-health-permit",
+  "title": "Public Health Permit for food facilities (LA County)",
+  "summary": "New food facilities need LA County Environmental Health approval of design and construction through the plan check process before a Public Health Permit is issued. If you are buying an existing restaurant with no major construction, contact the nearest Environmental Health district office. Do not send payment until you receive an invoice from Public Health.",
+  "issuer": "LA County Department of Public Health – Environmental Health",
+  "fee": "See the County fee schedule (not stated here)",
+  "documents": "Plans for plan check; Public Health Permit/License Application",
+  "contact": {
+   "desk": "Plan Check Program",
+   "phone": "(626) 430-5560"
+  },
+  "apply_url": "https://publichealth.lacounty.gov/eh/about/permit.htm",
+  "url": "https://publichealth.lacounty.gov/eh/inspection/how-to-obtain-restaurant-food-facility-permit.htm",
+  "code": null,
+  "verified": "2026-11-14",
+  "confidence": "verified",
+  "business_types": [
+   "food"
+  ],
+  "stages": [
+   "start",
+   "location"
+  ],
+  "order": 50,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "You prepare, serve or sell food"
+ },
+ {
+  "id": "cdtfa-sellers-permit",
+  "title": "Seller's permit (California CDTFA)",
+  "summary": "Businesses selling taxable goods register with the California Department of Tax and Fee Administration. Register online at cdtfa.ca.gov: Register Online, then Register a New Business Activity; you can also register in person at a CDTFA office.",
+  "issuer": "California Department of Tax and Fee Administration",
+  "fee": "Confirm on CDTFA Publication 107 before stating (widely reported as no fee; a security deposit may be required)",
+  "documents": null,
+  "contact": {
+   "desk": "CDTFA",
+   "phone": "1-800-400-7115"
+  },
+  "apply_url": "https://www.cdtfa.ca.gov/services/registration.htm",
+  "url": "https://cdtfa.ca.gov/formspubs/pub107/applying-for-a-sellers-permit.htm",
+  "code": null,
+  "verified": "2026-11-14",
+  "confidence": "link-only",
+  "business_types": [
+   "food",
+   "retail",
+   "other"
+  ],
+  "stages": [
+   "start"
+  ],
+  "order": 60,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "You sell goods to customers"
+ },
+ {
+  "id": "fbn-statement",
+  "title": "Fictitious Business Name statement (LA County)",
+  "summary": "If you do business under a name that is not your own legal name, you file a Fictitious Business Name statement with the LA County Registrar-Recorder/County Clerk. Open the County page for current fees, deadlines and the newspaper publication requirement.",
+  "issuer": "LA County Registrar-Recorder/County Clerk",
+  "fee": "Not verified on the official page (secondary sources report $26 plus $5 per extra name or owner)",
+  "documents": null,
+  "contact": {
+   "desk": "Business Filings and Registration",
+   "phone": "(800) 201-8999"
+  },
+  "apply_url": "https://www.lavote.gov",
+  "url": "https://www.lavote.gov",
+  "code": null,
+  "verified": null,
+  "confidence": "link-only",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "home",
+   "other"
+  ],
+  "stages": [
+   "start"
+  ],
+  "order": 70,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "You may operate under a business name different from your legal name"
+ },
+ {
+  "id": "edd-employer-registration",
+  "title": "Register as an employer (California EDD)",
+  "summary": "A business must register with the EDD within 15 days of paying more than $100 in wages in a calendar quarter. Register online through e-Services for Business. New hires must be reported within 20 calendar days of their first day of work.",
+  "issuer": "California Employment Development Department",
+  "fee": null,
+  "documents": "Business addresses, phone, email, date of first payroll over $100",
+  "contact": {
+   "desk": "EDD e-Services for Business"
+  },
+  "apply_url": "https://edd.ca.gov/e-Services_for_Business",
+  "url": "https://edd.ca.gov/en/Payroll_Taxes/Am_I_Required_to_Register_as_an_Employer",
+  "code": null,
+  "verified": "2026-11-14",
+  "confidence": "verified",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "other"
+  ],
+  "stages": [
+   "hire"
+  ],
+  "order": 10,
+  "law_url": null,
+  "deadlines": [
+   "Register within 15 days of paying more than $100 in wages in a calendar quarter",
+   "Report each new hire within 20 calendar days of their first day"
+  ],
+  "applies_because": "You have, or plan to hire, employees"
+ },
+ {
+  "id": "ca-min-wage",
+  "title": "California minimum wage",
+  "summary": "The statewide minimum wage is $16.90 per hour in 2026 and increases to $17.40 per hour on January 1, 2027, for all employers. Glendale's hotel worker wage is higher (see the hotel entry).",
+  "issuer": "California Department of Industrial Relations",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Labor Commissioner's Office"
+  },
+  "apply_url": null,
+  "url": "https://dir.ca.gov/DIRNews/2026/2026-66.html",
+  "code": null,
+  "verified": "2026-11-14",
+  "confidence": "verified",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "other"
+  ],
+  "stages": [
+   "hire",
+   "comply"
+  ],
+  "order": 20,
+  "law_url": null,
+  "deadlines": [
+   "Statewide minimum wage rises to $17.40 per hour on January 1, 2027"
+  ],
+  "applies_because": "You have, or plan to hire, employees"
+ },
+ {
+  "id": "hotel-wage",
+  "title": "Hotel worker minimum wage (Glendale)",
+  "summary": "Glendale hotel employers must pay at least $25.00 per hour from July 1, 2026. Annual CPI adjustments begin July 1, 2029.",
+  "issuer": "City of Glendale",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Economic Development"
+  },
+  "apply_url": null,
+  "url": "https://www.glendaleca.gov/government/departments/office-of-the-city-manager/economic-development/hospitality-worker-workplace-protections",
+  "code": "GMC 5.120",
+  "verified": "2026-11-13",
+  "confidence": "verified",
+  "business_types": [
+   "hotel"
+  ],
+  "stages": [
+   "hire",
+   "comply"
+  ],
+  "order": 30,
+  "law_url": null,
+  "deadlines": [
+   "Annual CPI adjustments begin July 1, 2029"
+  ],
+  "applies_because": "You operate a hotel in Glendale"
+ },
+ {
+  "id": "foodware-on-request",
+  "title": "Disposable foodware accessories only on request",
+  "summary": "Food and beverage providers may not give utensils, napkins, straws and similar items unless the customer asks. Online and takeout orders must be opt-in. Drive-through and delivery staff may ask.",
+  "issuer": "City of Glendale – Office of Sustainability",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Office of Sustainability",
+   "email": "Sustainability@Glendaleca.gov",
+   "phone": "(818) 548-4844"
+  },
+  "apply_url": null,
+  "url": "https://www.glendaleca.gov/government/departments/office-of-the-city-manager/glendale-office-of-sustainability/sustainability-initiatives/single-use-plastic-foodware-ban",
+  "code": "GMC 8.46",
+  "verified": "2026-11-13",
+  "confidence": "verified",
+  "business_types": [
+   "food"
+  ],
+  "stages": [
+   "notice",
+   "comply"
+  ],
+  "order": 10,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "You serve food or drinks"
+ },
+ {
+  "id": "polystyrene-ban",
+  "title": "Polystyrene foodware ban",
+  "summary": "No polystyrene foodware may be used, distributed or sold with prepared or raw food or beverages in Glendale. The rule also covers coolers, packing materials, egg cartons and meat, fish and produce trays. Non-polystyrene disposables are allowed.",
+  "issuer": "City of Glendale – Office of Sustainability",
+  "fee": null,
+  "documents": null,
+  "contact": {
+   "desk": "Office of Sustainability",
+   "email": "Sustainability@Glendaleca.gov",
+   "phone": "(818) 548-4844"
+  },
+  "apply_url": null,
+  "url": "https://www.glendaleca.gov/government/departments/office-of-the-city-manager/glendale-office-of-sustainability/sustainability-initiatives/polystyrene-regulations",
+  "code": "GMC 8.42",
+  "verified": "2026-11-13",
+  "confidence": "verified",
+  "business_types": [
+   "food"
+  ],
+  "stages": [
+   "notice",
+   "comply"
+  ],
+  "order": 20,
+  "law_url": "https://ecode360.com/43345587",
+  "deadlines": [],
+  "applies_because": "You serve or sell food or drinks"
+ },
+ {
+  "id": "econdev-help",
+  "title": "Business help from the City",
+  "summary": "The Economic Development Division offers business assistance programs. Small business advising is available through the Small Business Development Center, and hiring help through the Verdugo Job Center.",
+  "issuer": "City of Glendale – Economic Development",
+  "fee": "Free",
+  "documents": null,
+  "contact": {
+   "desk": "Small Business Development Center",
+   "phone": "(818) 552-3321",
+   "desk2": "Verdugo Job Center",
+   "phone2": "(818) 409-0476"
+  },
+  "apply_url": null,
+  "url": "https://www.glendaleca.gov/government/departments/economic-development/business-resources",
+  "code": null,
+  "verified": "2026-11-13",
+  "confidence": "recheck (page did not load on Nov 14; reopen it before the demo)",
+  "business_types": [
+   "food",
+   "retail",
+   "services",
+   "office",
+   "hotel",
+   "home",
+   "other"
+  ],
+  "stages": [
+   "funding",
+   "hire",
+   "start"
+  ],
+  "order": 10,
+  "law_url": null,
+  "deadlines": [],
+  "applies_because": "Available to every Glendale business"
+ }
 ]

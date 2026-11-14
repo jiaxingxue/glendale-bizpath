@@ -43,12 +43,22 @@ export type BusinessType = {
   sub_key: string
 }
 
+/** Shape of an entry in data/corpus.json: optional values are null or missing. */
+type RawRequirement = Omit<Requirement, 'fee' | 'documents' | 'contact' | 'apply_url' | 'code' | 'law_url' | 'verified'> & {
+  fee?: string | null
+  documents?: string[] | string | null
+  contact?: Partial<Contact> | null
+  apply_url?: string | null
+  code?: string | null
+  law_url?: string | null
+  verified?: string | null
+}
+
 export type LifecycleConfig = {
   stages: Stage[]
   business_types: BusinessType[]
   coverage: Record<string, string>
   feedback_reasons: string[]
-  permit_center: Contact
 }
 
 /** Requirements tagged with this id apply to every business type. */
@@ -57,7 +67,35 @@ const FUNDING_STAGE = 'funding'
 const LINK_ONLY = 'link-only'
 const FALLBACK_LANGUAGE = 'en'
 
-export const corpus = corpusJson as Requirement[]
+/** Id of the corpus entry whose contact is the Permit Services Center desk. */
+const PERMIT_CENTER_ENTRY = 'prelease-visit'
+
+function toContact(raw: Partial<Contact> | null | undefined): Contact {
+  return {
+    desk: raw?.desk ?? '',
+    address: raw?.address ?? '',
+    hours: raw?.hours ?? '',
+    phone: raw?.phone ?? '',
+    email: raw?.email ?? '',
+  }
+}
+
+/** Adapts the corpus to the shapes the UI expects (missing values become empty strings or lists). */
+function toRequirement(raw: RawRequirement): Requirement {
+  const documents = typeof raw.documents === 'string' ? [raw.documents] : (raw.documents ?? [])
+  return {
+    ...raw,
+    fee: raw.fee ?? '',
+    documents,
+    contact: toContact(raw.contact),
+    apply_url: raw.apply_url ?? '',
+    code: raw.code ?? '',
+    law_url: raw.law_url ?? '',
+    verified: raw.verified ?? '',
+  }
+}
+
+export const corpus = (corpusJson as RawRequirement[]).map(toRequirement)
 export const lifecycleConfig = configJson as LifecycleConfig
 
 export function getBusinessType(id: string) {
@@ -103,7 +141,7 @@ export function groupByStage(requirements: Requirement[], stageId?: string): Sta
     .filter((group) => group.requirements.length > 0)
 }
 
-export const permitCenter = lifecycleConfig.permit_center
+export const permitCenter: Contact = corpus.find((req) => req.id === PERMIT_CENTER_ENTRY)?.contact ?? toContact(null)
 
 export function coverageFor(typeId: string): 'verified' | 'baseline' {
   return lifecycleConfig.coverage[typeId] === 'verified' ? 'verified' : 'baseline'
