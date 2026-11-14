@@ -1,0 +1,59 @@
+{
+  "stages": [
+    {
+      "id": "start",
+      "label_key": "stage.start",
+      "examples": ["stage.start.ex1", "stage.start.ex2", "stage.start.ex3"],
+      "guides": ["food", "home", "retail", "other"]
+    },
+    {
+      "id": "location",
+      "label_key": "stage.location",
+      "examples": ["stage.location.ex1", "stage.location.ex2", "stage.location.ex3"],
+      "guides": ["food", "retail", "office", "other"]
+    },
+    {
+      "id": "employees",
+      "label_key": "stage.employees",
+      "examples": ["stage.employees.ex1", "stage.employees.ex2", "stage.employees.ex3"],
+      "guides": ["food", "personal", "other"]
+    },
+    {
+      "id": "notice",
+      "label_key": "stage.notice",
+      "examples": ["stage.notice.ex1", "stage.notice.ex2", "stage.notice.ex3"],
+      "guides": ["food", "other"]
+    },
+    {
+      "id": "renew",
+      "label_key": "stage.renew",
+      "examples": ["stage.renew.ex1", "stage.renew.ex2", "stage.renew.ex3"],
+      "guides": ["food", "lodging", "other"]
+    },
+    {
+      "id": "funding",
+      "label_key": "stage.funding",
+      "examples": ["stage.funding.ex1", "stage.funding.ex2", "stage.funding.ex3"],
+      "guides": ["other"]
+    }
+  ],
+  "business_types": [
+    { "id": "food", "label_key": "type.food", "sub_key": "type.food.sub" },
+    { "id": "home", "label_key": "type.home", "sub_key": "type.home.sub" },
+    { "id": "retail", "label_key": "type.retail", "sub_key": "type.retail.sub" },
+    { "id": "personal", "label_key": "type.personal", "sub_key": "type.personal.sub" },
+    { "id": "office", "label_key": "type.office", "sub_key": "type.office.sub" },
+    { "id": "lodging", "label_key": "type.lodging", "sub_key": "type.lodging.sub" },
+    { "id": "other", "label_key": "type.other", "sub_key": "type.other.sub" }
+  ],
+  "coverage": {
+    "food": "verified",
+    "home": "verified",
+    "retail": "baseline",
+    "personal": "baseline",
+    "office": "baseline",
+    "lodging": "baseline",
+    "other": "verified"
+  },
+  "feedback_reasons": ["feedback.outdated", "feedback.wrong_fee", "feedback.broken_link", "feedback.other"]
+}

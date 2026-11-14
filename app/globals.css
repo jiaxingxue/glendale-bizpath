@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-inter), var(--font-armenian), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-josefin), var(--font-armenian), ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-ridge: var(--brand-ridge);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.25);
+  --radius-2xl: calc(var(--radius) * 1.5);
+}
+
+:root {
+  color-scheme: light;
+  --brand: #12343b;
+  --brand-foreground: #f7f9fa;
+  --brand-muted: #c3d5d8;
+  --brand-ridge: #1e4c55;
+  --success: #ddf1ea;
+  --success-foreground: #0b5e4e;
+  --warning: #fff1cc;
+  --warning-foreground: #6b4a00;
+
+  --background: #f7f9fa;
+  --foreground: #1c2b2e;
+  --card: #ffffff;
+  --card-foreground: #1c2b2e;
+  --popover: #ffffff;
+  --popover-foreground: #1c2b2e;
+  --primary: #0b6b58;
+  --primary-foreground: #ffffff;
+  --secondary: #e9f0f1;
+  --secondary-foreground: #1c2b2e;
+  --muted: #e9f0f1;
+  --muted-foreground: #4a5c60;
+  --accent: #f2b632;
+  --accent-foreground: #12343b;
+  --destructive: #b42318;
+  --border: #c9d4d6;
+  --input: #c9d4d6;
+  --ring: #0b6b58;
+  --radius: 1rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background font-sans text-foreground;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-semibold;
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .on-brand :focus-visible {
+    outline-color: var(--accent);
+  }
+}
