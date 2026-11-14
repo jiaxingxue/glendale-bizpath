@@ -1,17 +1,18 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { askAssistant, type AssistantAnswer } from '@/lib/assistant'
 import { useI18n } from '@/lib/i18n'
+import { useAsk } from '@/lib/use-ask'
 import { visitHref } from '@/lib/visit'
 import { AskForm } from '@/components/ask-form'
 import { AnswerPanel } from '@/components/home/answer-panel'
+import { AskStatus } from '@/components/home/ask-status'
 
 export function TypeAskBox({ typeId, stageId }: { typeId: string; stageId: string | null }) {
   const { t, lang } = useI18n()
   const inputRef = useRef<HTMLInputElement>(null)
   const [question, setQuestion] = useState('')
-  const [result, setResult] = useState<{ question: string; answer: AssistantAnswer } | null>(null)
+  const { state, ask: sendQuestion } = useAsk(lang)
 
   async function ask(text: string) {
     const trimmed = text.trim()
@@ -19,7 +20,7 @@ export function TypeAskBox({ typeId, stageId }: { typeId: string; stageId: strin
       inputRef.current?.focus()
       return
     }
-    setResult({ question: trimmed, answer: await askAssistant(trimmed, lang) })
+    await sendQuestion(trimmed)
   }
 
   return (
@@ -32,11 +33,13 @@ export function TypeAskBox({ typeId, stageId }: { typeId: string; stageId: strin
           <p className="leading-relaxed text-brand-muted">{t('type.ask_intro')}</p>
         </div>
         <AskForm id="type-ask-input" value={question} onChange={setQuestion} onSubmit={() => ask(question)} inputRef={inputRef} />
-        {result && (
+        <AskStatus state={state} />
+        {(state.status === 'streaming' || state.status === 'done') && (
           <AnswerPanel
-            question={result.question}
-            answer={result.answer}
-            visitHref={visitHref({ type: typeId, stage: stageId, question: result.question })}
+            question={state.question}
+            answer={state.answer}
+            streaming={state.status === 'streaming'}
+            visitHref={visitHref({ type: typeId, stage: stageId, question: state.question })}
             onFollowUp={ask}
           />
         )}

@@ -188,7 +188,15 @@
     "staff.chart.stage": "Lifecycle stage",
     "staff.unknown": "Not set",
     "staff.download_llms": "Download llms.txt",
-    "staff.download_corpus": "Download corpus.json"
+    "staff.download_corpus": "Download corpus.json",
+    "answer.no_source": "I don't have a verified Glendale source for that yet. Please contact the Permit Services Center below.",
+    "answer.decline_legal": "I can't give legal advice or help get around a rule. I can only share the City's published requirements; for your situation, please talk to the Permit Services Center below.",
+    "answer.decline_off_topic": "I can only help with business rules, permits and licenses in Glendale. Try asking what you need to open, move or run your business.",
+    "answer.error": "Sorry, the assistant is unavailable right now. Please try again, or contact the Permit Services Center.",
+    "answer.loading": "Checking the City's rules…",
+    "answer.matched": "Rules engine match",
+    "answer.link_only": "Not yet verified by BizPath",
+    "answer.related_declined": "Related verified requirements (not an answer to your question)"
   },
   "hy": {
     "banner": "Հաքաթոնի նախատիպ · Գլենդեյլ քաղաքի պաշտոնական կայք չէ",
@@ -279,7 +287,15 @@
     "answer.mt": "Մեքենայական թարգմանություն — գերակայում է անգլերեն տարբերակը։",
     "person.title": "Խոսել մարդու հետ",
     "deadlines.title": "Վերջնաժամկետներ",
-    "answer.applies": "Ինչ է վերաբերում ձեզ"
+    "answer.applies": "Ինչ է վերաբերում ձեզ",
+    "answer.no_source": "Այս հարցի համար դեռ չունեմ Գլենդեյլի ստուգված աղբյուր։ Խնդրում ենք դիմել ստորև նշված Permit Services Center-ին (Թույլտվությունների ծառայությունների կենտրոն)։",
+    "answer.decline_legal": "Ես չեմ կարող իրավաբանական խորհրդատվություն տալ կամ օգնել շրջանցել կանոնը։ Կարող եմ ներկայացնել միայն Քաղաքի հրապարակած պահանջները. ձեր իրավիճակի համար դիմեք ստորև նշված Permit Services Center-ին (Թույլտվությունների ծառայությունների կենտրոն)։",
+    "answer.decline_off_topic": "Ես կարող եմ օգնել միայն Գլենդեյլում բիզնեսի կանոնների, թույլտվությունների և լիցենզիաների հարցերում։ Փորձեք հարցնել, թե ինչ է պետք ձեր բիզնեսը բացելու, տեղափոխելու կամ վարելու համար։",
+    "answer.error": "Ներողություն, օգնականն այս պահին հասանելի չէ։ Խնդրում ենք կրկին փորձել կամ դիմել Permit Services Center-ին։",
+    "answer.loading": "Ստուգում ենք Քաղաքի կանոնները…",
+    "answer.matched": "Կիրառված կանոն",
+    "answer.link_only": "BizPath-ը դեռ չի ստուգել",
+    "answer.related_declined": "Առնչվող ստուգված պահանջներ (սա ձեր հարցի պատասխանը չէ)"
   },
   "es": {
     "banner": "Prototipo de hackatón · no es un sitio oficial de la Ciudad de Glendale",
@@ -417,6 +433,14 @@
     "visit.email": "Enviarme por correo",
     "visit.email_subject": "Mi visita al Centro de Servicios de Permisos de Glendale",
     "visit.no_fees": "No hay tarifas para esta situación.",
-    "deadlines.title": "Fechas límite"
+    "deadlines.title": "Fechas límite",
+    "answer.no_source": "Todavía no tengo una fuente verificada de Glendale para eso. Comuníquese con el Permit Services Center (Centro de Servicios de Permisos) que aparece abajo.",
+    "answer.decline_legal": "No puedo dar asesoramiento legal ni ayudar a evitar una norma. Solo puedo compartir los requisitos publicados por la Ciudad; para su situación, hable con el Permit Services Center (Centro de Servicios de Permisos) que aparece abajo.",
+    "answer.decline_off_topic": "Solo puedo ayudar con normas, permisos y licencias para negocios en Glendale. Pruebe a preguntar qué necesita para abrir, mudar o administrar su negocio.",
+    "answer.error": "Lo sentimos, el asistente no está disponible en este momento. Inténtelo de nuevo o comuníquese con el Permit Services Center.",
+    "answer.loading": "Revisando las normas de la Ciudad…",
+    "answer.matched": "Regla que se aplicó",
+    "answer.link_only": "Aún no verificado por BizPath",
+    "answer.related_declined": "Requisitos verificados relacionados (no son una respuesta a su pregunta)"
   }
 }

@@ -25,7 +25,8 @@ export function AnswerPanel({ question, answer, streaming = false, visitHref, on
   const [showEnglish, setShowEnglish] = useState(false)
   const [followUp, setFollowUp] = useState('')
   const translated = answer.lang !== 'en'
-  const content = showEnglish ? answer.english : answer.content
+  const englishReady = answer.english.summary !== '' || answer.english.steps.length > 0
+  const content = showEnglish && englishReady ? answer.english : answer.content
   const contentLang = showEnglish ? 'en' : answer.lang
 
   return (
@@ -68,18 +69,22 @@ export function AnswerPanel({ question, answer, streaming = false, visitHref, on
       )}
 
       <div aria-live="polite" lang={contentLang} className="flex flex-col gap-5">
-        <p className="text-lg leading-relaxed text-pretty">{content.summary}</p>
+        <p className="text-lg leading-relaxed text-pretty">
+          <CitedText text={content.summary} />
+        </p>
 
         {content.steps.length > 0 && (
           <div className="flex flex-col gap-3">
             <h3 className="text-lg">{t('answer.next')}</h3>
             <ol className="flex flex-col gap-2">
               {content.steps.map((step, i) => (
-                <li key={step} className="flex items-start gap-3 leading-relaxed">
+                <li key={i} className="flex items-start gap-3 leading-relaxed">
                   <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
                     {i + 1}
                   </span>
-                  <span className="pt-0.5">{step}</span>
+                  <span className="pt-0.5">
+                    <CitedText text={step} />
+                  </span>
                 </li>
               ))}
             </ol>
@@ -89,7 +94,7 @@ export function AnswerPanel({ question, answer, streaming = false, visitHref, on
 
       {answer.rows.length > 0 && (
         <div className="flex flex-col gap-3">
-          <h3 className="text-lg">{t('answer.applies')}</h3>
+          <h3 className="text-lg">{t(answer.declined ? 'answer.related_declined' : 'answer.applies')}</h3>
           <EnglishSourceNote />
           <div className="overflow-x-auto rounded-xl border border-border">
             <table lang="en" className="w-full min-w-xl text-start text-sm">
@@ -108,14 +113,24 @@ export function AnswerPanel({ question, answer, streaming = false, visitHref, on
                     <th scope="row" className="px-3 py-3 text-start font-normal">
                       <div className="flex flex-col gap-1">
                         <span className="font-semibold">{row.title}</span>
+                        {row.linkOnly && (
+                          <span className="w-fit rounded-full bg-warning px-2 py-0.5 text-xs font-medium text-warning-foreground">
+                            {t('answer.link_only')}
+                          </span>
+                        )}
                         {row.code && <LawLink code={row.code} url={row.lawUrl} />}
-                        {row.why && (
+                        {(row.why || row.trigger) && (
                           <details className="group">
                             <summary className="flex min-h-9 cursor-pointer list-none items-center gap-1 text-sm font-medium text-primary [&::-webkit-details-marker]:hidden">
                               {t('req.why')}
                               <ChevronDown className="size-4 transition-transform group-open:rotate-180" aria-hidden="true" />
                             </summary>
-                            <p className="pt-1 leading-relaxed text-muted-foreground">{row.why}</p>
+                            {row.why && <p className="pt-1 leading-relaxed text-muted-foreground">{row.why}</p>}
+                            {row.trigger && (
+                              <p className="pt-1 text-xs text-muted-foreground">
+                                <span className="font-medium">{t('answer.matched')}:</span> {row.trigger}
+                              </p>
+                            )}
                           </details>
                         )}
                       </div>
@@ -205,5 +220,25 @@ export function AnswerPanel({ question, answer, streaming = false, visitHref, on
         </div>
       </form>
     </section>
+  )
+}
+
+const CITATION = /(\[[a-z0-9-]+\])/
+const IS_CITATION = /^\[[a-z0-9-]+\]$/
+
+/** Renders the model's [entry-id] citation tags as small labels so each sentence stays traceable. */
+function CitedText({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(CITATION).map((part, i) =>
+        IS_CITATION.test(part) ? (
+          <span key={i} className="ms-1 rounded bg-secondary px-1 py-0.5 align-middle font-mono text-xs text-secondary-foreground">
+            {part.slice(1, -1)}
+          </span>
+        ) : (
+          part
+        ),
+      )}
+    </>
   )
 }

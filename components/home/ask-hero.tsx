@@ -1,18 +1,18 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { askAssistant, explainNotice, type AssistantAnswer, type NoticeExplanation } from '@/lib/assistant'
+import { explainNotice, type NoticeExplanation } from '@/lib/assistant'
 import { getStage, lifecycleConfig } from '@/lib/data'
 import { useI18n } from '@/lib/i18n'
+import { useAsk } from '@/lib/use-ask'
 import { visitHref } from '@/lib/visit'
 import { AskForm } from '@/components/ask-form'
 import { StagePanel } from '@/components/home/stage-panel'
 import { AnswerPanel } from '@/components/home/answer-panel'
 import { NoticeResult } from '@/components/home/notice-result'
+import { AskStatus } from '@/components/home/ask-status'
 
-type Result =
-  | { kind: 'answer'; question: string; answer: AssistantAnswer }
-  | { kind: 'notice'; explanation: NoticeExplanation }
+type Result = { kind: 'answer' } | { kind: 'notice'; explanation: NoticeExplanation }
 
 export function AskHero() {
   const { t, lang } = useI18n()
@@ -21,6 +21,7 @@ export function AskHero() {
   const [stageId, setStageId] = useState<string | null>(null)
   const [result, setResult] = useState<Result | null>(null)
   const stage = getStage(stageId ?? undefined)
+  const { state: askState, ask: sendQuestion } = useAsk(lang)
 
   async function ask(text: string) {
     const trimmed = text.trim()
@@ -28,8 +29,8 @@ export function AskHero() {
       inputRef.current?.focus()
       return
     }
-    const answer = await askAssistant(trimmed, lang)
-    setResult({ kind: 'answer', question: trimmed, answer })
+    setResult({ kind: 'answer' })
+    await sendQuestion(trimmed)
   }
 
   async function handleExplainNotice(text: string, image: File | null) {
@@ -37,9 +38,9 @@ export function AskHero() {
     setResult({ kind: 'notice', explanation })
   }
 
-  function fillExample(text: string) {
+  function askExample(text: string) {
     setQuestion(text)
-    inputRef.current?.focus()
+    void ask(text)
   }
 
   return (
@@ -78,14 +79,16 @@ export function AskHero() {
         </fieldset>
 
         <div id="stage-panel" aria-live="polite">
-          {stage && <StagePanel stage={stage} onExample={fillExample} onExplainNotice={handleExplainNotice} />}
+          {stage && <StagePanel stage={stage} onExample={askExample} onExplainNotice={handleExplainNotice} />}
         </div>
 
-        {result?.kind === 'answer' && (
+        {result?.kind === 'answer' && <AskStatus state={askState} />}
+        {result?.kind === 'answer' && (askState.status === 'streaming' || askState.status === 'done') && (
           <AnswerPanel
-            question={result.question}
-            answer={result.answer}
-            visitHref={visitHref({ stage: stageId, question: result.question })}
+            question={askState.question}
+            answer={askState.answer}
+            streaming={askState.status === 'streaming'}
+            visitHref={visitHref({ stage: stageId, question: askState.question })}
             onFollowUp={ask}
           />
         )}

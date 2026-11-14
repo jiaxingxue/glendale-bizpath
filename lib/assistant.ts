@@ -1,17 +1,7 @@
-import { corpus, isLinkOnly, permitCenter, requirementsForType, type Contact } from '@/lib/data'
+import type { AnswerRow, AskEvent } from '@/lib/ask-protocol'
+import { corpus, type Contact } from '@/lib/data'
 
-export type AnswerRow = {
-  requirementId: string
-  title: string
-  issuer: string
-  fee: string
-  where: string
-  whereUrl: string
-  sourceUrl: string
-  code: string
-  lawUrl: string
-  why: string
-}
+export type { AnswerRow } from '@/lib/ask-protocol'
 
 export type AnswerContent = { summary: string; steps: string[] }
 
@@ -25,6 +15,102 @@ export type AssistantAnswer = {
   contact: Contact
   verified: string
   isSample: boolean
+  /** No verified source matched (logged as a content gap). */
+  gap: boolean
+  /** Legal advice or off-topic request that was declined. */
+  declined: boolean
+  englishQuestion: string
+  businessType: string
+  stage: string
+}
+
+const STEP_PATTERN = /^\s*\d+[.)]\s+/
+
+/** Splits the model's text into the summary paragraph and the numbered next steps. */
+export function parseAnswerText(text: string): AnswerContent {
+  const summary: string[] = []
+  const steps: string[] = []
+  for (const line of text.split('\n')) {
+    if (STEP_PATTERN.test(line)) steps.push(line.replace(STEP_PATTERN, '').trim())
+    else if (line.trim() && steps.length === 0) summary.push(line.trim())
+    else if (line.trim() && steps.length > 0) steps[steps.length - 1] += ` ${line.trim()}`
+  }
+  return { summary: summary.join(' '), steps }
+}
+
+export class AssistantError extends Error {}
+
+/**
+ * Asks POST /api/ask and streams the result. `onUpdate` is called with the answer so far: first when
+ * the rules engine's rows arrive, then on every chunk of text. Resolves with the final answer.
+ */
+export async function askAssistant(
+  question: string,
+  lang: string,
+  onUpdate?: (answer: AssistantAnswer) => void,
+): Promise<AssistantAnswer> {
+  const response = await fetch('/api/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question, lang }),
+  })
+  if (!response.ok || !response.body) throw new AssistantError(`Ask failed with status ${response.status}`)
+
+  let answer: AssistantAnswer | null = null
+  let text = ''
+  const reader = response.body.pipeThrough(new TextDecoderStream()).getReader()
+  let buffer = ''
+
+  const handle = (event: AskEvent) => {
+    switch (event.type) {
+      case 'meta':
+        answer = {
+          lang: event.lang,
+          content: { summary: '', steps: [] },
+          english: { summary: '', steps: [] },
+          rows: event.rows,
+          contact: event.contact,
+          verified: event.verified,
+          isSample: false,
+          gap: event.gap,
+          declined: event.declined,
+          englishQuestion: event.englishQuestion,
+          businessType: event.businessType,
+          stage: event.stage,
+        }
+        break
+      case 'delta':
+        if (!answer) return
+        text += event.text
+        answer = { ...answer, content: parseAnswerText(text) }
+        if (answer.lang === 'en') answer.english = answer.content
+        break
+      case 'english':
+        if (!answer) return
+        answer = { ...answer, english: parseAnswerText(event.text) }
+        break
+      case 'error':
+        throw new AssistantError(event.message)
+      case 'done':
+        return
+    }
+    if (answer) onUpdate?.(answer)
+  }
+
+  for (;;) {
+    const { value, done } = await reader.read()
+    if (value) buffer += value
+    let newline = buffer.indexOf('\n')
+    while (newline >= 0) {
+      const line = buffer.slice(0, newline).trim()
+      buffer = buffer.slice(newline + 1)
+      if (line) handle(JSON.parse(line) as AskEvent)
+      newline = buffer.indexOf('\n')
+    }
+    if (done) break
+  }
+  if (!answer) throw new AssistantError('Empty response')
+  return answer
 }
 
 export type NoticeExplanation = {
@@ -35,70 +121,6 @@ export type NoticeExplanation = {
 
 export const SAMPLE_NOTICE_TEXT =
   'SAMPLE — NOTICE OF VIOLATION. Environmental Health inspection on [date]. Item 14: hand-washing sink blocked by stored equipment. Correct within 10 days. A re-inspection fee may apply.'
-
-const SAMPLE_CONTENT: Record<string, AnswerContent> = {
-  en: {
-    summary:
-      'PLACEHOLDER. To open a café you will usually need a city business license and an environmental health permit before you serve food. Start with the business license, then apply for the health permit.',
-    steps: [
-      'Register your business and apply for a business license.',
-      'Apply for an environmental health permit and schedule the inspection.',
-      'Bring your documents to the Permit Services Center if you have questions.',
-    ],
-  },
-  es: {
-    summary:
-      'MARCADOR. Para abrir una cafetería normalmente necesita una licencia comercial de la ciudad y un permiso de salud ambiental antes de servir comida. Empiece con la licencia comercial y luego solicite el permiso de salud.',
-    steps: [
-      'Registre su negocio y solicite una licencia comercial.',
-      'Solicite un permiso de salud ambiental y programe la inspección.',
-      'Lleve sus documentos al Centro de Servicios de Permisos si tiene preguntas.',
-    ],
-  },
-  hy: {
-    summary:
-      'ՕՐԻՆԱԿ։ Սրճարան բացելու համար սովորաբար անհրաժեշտ է քաղաքային բիզնես լիցենզիա և շրջակա միջավայրի առողջապահական թույլտվություն՝ նախքան սնունդ մատուցելը։',
-    steps: [
-      'Գրանցեք ձեր բիզնեսը և դիմեք բիզնես լիցենզիայի համար։',
-      'Դիմեք առողջապահական թույլտվության համար և նշանակեք ստուգումը։',
-      'Հարցերի դեպքում ձեր փաստաթղթերը բերեք Թույլտվությունների ծառայությունների կենտրոն։',
-    ],
-  },
-}
-
-function latestVerified(dates: string[]) {
-  return dates.filter(Boolean).sort().pop() ?? ''
-}
-
-function sampleAnswer(lang: string): AssistantAnswer {
-  const requirements = requirementsForType('food').filter((req) => !isLinkOnly(req) && !req.stages.includes('funding'))
-  const answerLang = SAMPLE_CONTENT[lang] ? lang : 'en'
-  return {
-    lang: answerLang,
-    content: SAMPLE_CONTENT[answerLang],
-    english: SAMPLE_CONTENT.en,
-    rows: requirements.map((req) => ({
-      requirementId: req.id,
-      title: req.title,
-      issuer: req.issuer,
-      fee: req.fee,
-      where: req.contact.desk,
-      whereUrl: req.apply_url,
-      sourceUrl: req.url,
-      code: req.code,
-      lawUrl: req.law_url,
-      why: req.applies_because,
-    })),
-    contact: permitCenter,
-    verified: latestVerified(requirements.map((req) => req.verified)),
-    isSample: true,
-  }
-}
-
-/** Placeholder: returns sample data until the AI assistant is wired up. */
-export async function askAssistant(_question: string, lang: string): Promise<AssistantAnswer> {
-  return sampleAnswer(lang)
-}
 
 /** Placeholder: returns a sample explanation until notice explanation is wired up. */
 export async function explainNotice(_input: { text: string; image: File | null; lang: string }): Promise<NoticeExplanation> {
