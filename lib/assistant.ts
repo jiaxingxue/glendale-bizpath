@@ -1,5 +1,5 @@
-import type { AnswerRow, AskEvent } from '@/lib/ask-protocol'
-import { corpus, type Contact } from '@/lib/data'
+import type { AnswerRow, AskEvent, NoticeInfo } from '@/lib/ask-protocol'
+import type { Contact } from '@/lib/data'
 
 export type { AnswerRow } from '@/lib/ask-protocol'
 
@@ -22,6 +22,8 @@ export type AssistantAnswer = {
   englishQuestion: string
   businessType: string
   stage: string
+  /** Set for notice explanations: what the notice itself says. */
+  notice?: NoticeInfo
 }
 
 const STEP_PATTERN = /^\s*\d+[.)]\s+/
@@ -40,19 +42,26 @@ export function parseAnswerText(text: string): AnswerContent {
 
 export class AssistantError extends Error {}
 
+export type OnUpdate = (answer: AssistantAnswer) => void
+
 /**
  * Asks POST /api/ask and streams the result. `onUpdate` is called with the answer so far: first when
  * the rules engine's rows arrive, then on every chunk of text. Resolves with the final answer.
  */
-export async function askAssistant(
-  question: string,
-  lang: string,
-  onUpdate?: (answer: AssistantAnswer) => void,
-): Promise<AssistantAnswer> {
-  const response = await fetch('/api/ask', {
+export function askAssistant(question: string, lang: string, onUpdate?: OnUpdate) {
+  return streamAnswer('/api/ask', { question, lang }, onUpdate)
+}
+
+/** Sends pasted notice text to POST /api/notice; streams like askAssistant. */
+export function explainNotice(text: string, lang: string, onUpdate?: OnUpdate) {
+  return streamAnswer('/api/notice', { text, lang }, onUpdate)
+}
+
+async function streamAnswer(path: string, body: object, onUpdate?: OnUpdate): Promise<AssistantAnswer> {
+  const response = await fetch(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question, lang }),
+    body: JSON.stringify(body),
   })
   if (!response.ok || !response.body) throw new AssistantError(`Ask failed with status ${response.status}`)
 
@@ -77,6 +86,7 @@ export async function askAssistant(
           englishQuestion: event.englishQuestion,
           businessType: event.businessType,
           stage: event.stage,
+          notice: event.notice,
         }
         break
       case 'delta':
@@ -113,21 +123,10 @@ export async function askAssistant(
   return answer
 }
 
-export type NoticeExplanation = {
-  says: string
-  requirementId: string
-  isSample: boolean
-}
-
-export const SAMPLE_NOTICE_TEXT =
-  'SAMPLE — NOTICE OF VIOLATION. Environmental Health inspection on [date]. Item 14: hand-washing sink blocked by stored equipment. Correct within 10 days. A re-inspection fee may apply.'
-
-/** Placeholder: returns a sample explanation until notice explanation is wired up. */
-export async function explainNotice(_input: { text: string; image: File | null; lang: string }): Promise<NoticeExplanation> {
-  const requirement = corpus.find((req) => req.id === 'health-permit') ?? corpus[0]
-  return {
-    says: 'PLACEHOLDER. An inspector found a hand-washing sink blocked by equipment and asks you to fix it within 10 days.',
-    requirementId: requirement.id,
-    isSample: true,
-  }
-}
+/** Section G.9 of the plan. Shown with the label "Sample notice for demonstration". */
+export const SAMPLE_NOTICE_TEXT = `SAMPLE NOTICE FOR DEMONSTRATION — NOT A REAL CITY DOCUMENT
+To: Owner, Anna's Café
+We received a report that your business provides plastic utensils and straws
+with takeout orders without the customer asking for them. Glendale Municipal Code
+Chapter 8.46 allows disposable foodware accessories only when a customer requests
+them. Please review your takeout and online ordering practices.`

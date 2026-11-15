@@ -37,6 +37,17 @@ export type AskMeta = {
   gap: boolean
   /** Legal advice or off-topic: the reply is a short decline. */
   declined: boolean
+  /** Present for /api/notice: what the notice itself says, as read by the model. */
+  notice?: NoticeInfo
+}
+
+export type NoticeInfo = {
+  /** One English sentence: what the notice says. */
+  summary: string
+  /** Code section named in the notice, as written there. */
+  citedCode: string | null
+  /** Any date or number of days stated in the notice, as written there. Not a legal deadline. */
+  deadline: string | null
 }
 
 export type AskEvent =

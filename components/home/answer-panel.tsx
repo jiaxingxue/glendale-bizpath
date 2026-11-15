@@ -231,7 +231,7 @@ const CITATION = /(\[[a-z0-9-]+\])/
 const IS_CITATION = /^\[[a-z0-9-]+\]$/
 
 /** Renders the model's [entry-id] citation tags as small labels so each sentence stays traceable. */
-function CitedText({ text }: { text: string }) {
+export function CitedText({ text }: { text: string }) {
   return (
     <>
       {text.split(CITATION).map((part, i) =>

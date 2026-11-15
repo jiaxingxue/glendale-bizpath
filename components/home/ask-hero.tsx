@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { explainNotice, type NoticeExplanation } from '@/lib/assistant'
 import { getStage, lifecycleConfig } from '@/lib/data'
 import { useI18n } from '@/lib/i18n'
 import { useAsk } from '@/lib/use-ask'
@@ -12,16 +11,15 @@ import { AnswerPanel } from '@/components/home/answer-panel'
 import { NoticeResult } from '@/components/home/notice-result'
 import { AskStatus } from '@/components/home/ask-status'
 
-type Result = { kind: 'answer' } | { kind: 'notice'; explanation: NoticeExplanation }
-
 export function AskHero() {
   const { t, lang } = useI18n()
   const inputRef = useRef<HTMLInputElement>(null)
   const [question, setQuestion] = useState('')
   const [stageId, setStageId] = useState<string | null>(null)
-  const [result, setResult] = useState<Result | null>(null)
+  const [noticeIsSample, setNoticeIsSample] = useState(false)
   const stage = getStage(stageId ?? undefined)
-  const { state: askState, ask: sendQuestion } = useAsk(lang)
+  const { state: askState, ask: sendQuestion, explain } = useAsk(lang)
+  const hasAnswer = askState.status === 'streaming' || askState.status === 'done'
 
   async function ask(text: string) {
     const trimmed = text.trim()
@@ -29,13 +27,12 @@ export function AskHero() {
       inputRef.current?.focus()
       return
     }
-    setResult({ kind: 'answer' })
     await sendQuestion(trimmed)
   }
 
-  async function handleExplainNotice(text: string, image: File | null) {
-    const explanation = await explainNotice({ text, image, lang })
-    setResult({ kind: 'notice', explanation })
+  async function handleExplainNotice(text: string, isSample: boolean) {
+    setNoticeIsSample(isSample)
+    await explain(text)
   }
 
   function askExample(text: string) {
@@ -82,8 +79,11 @@ export function AskHero() {
           {stage && <StagePanel stage={stage} onExample={askExample} onExplainNotice={handleExplainNotice} />}
         </div>
 
-        {result?.kind === 'answer' && <AskStatus state={askState} />}
-        {result?.kind === 'answer' && (askState.status === 'streaming' || askState.status === 'done') && (
+        <AskStatus state={askState} />
+        {hasAnswer && askState.kind === 'notice' && (
+          <NoticeResult answer={askState.answer} streaming={askState.status === 'streaming'} isSample={noticeIsSample} />
+        )}
+        {hasAnswer && askState.kind === 'question' && (
           <AnswerPanel
             question={askState.question}
             answer={askState.answer}
@@ -92,7 +92,6 @@ export function AskHero() {
             onFollowUp={ask}
           />
         )}
-        {result?.kind === 'notice' && <NoticeResult explanation={result.explanation} />}
       </div>
     </section>
   )

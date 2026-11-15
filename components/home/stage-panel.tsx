@@ -11,7 +11,7 @@ const NOTICE_STAGE_ID = 'notice'
 type StagePanelProps = {
   stage: Stage
   onExample: (text: string) => void
-  onExplainNotice: (text: string, image: File | null) => void
+  onExplainNotice: (text: string, isSample: boolean) => void
 }
 
 export function StagePanel({ stage, onExample, onExplainNotice }: StagePanelProps) {

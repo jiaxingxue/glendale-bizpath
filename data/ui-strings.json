@@ -196,7 +196,13 @@
     "answer.loading": "Checking the City's rules…",
     "answer.matched": "Rules engine match",
     "answer.link_only": "Not yet verified by BizPath",
-    "answer.related_declined": "Related verified requirements (not an answer to your question)"
+    "answer.related_declined": "Related verified requirements (not an answer to your question)",
+    "notice.use_sample": "Use the sample notice",
+    "notice.code": "Code section named in the notice",
+    "notice.date": "Date or deadline in the notice",
+    "notice.no_date": "No date stated",
+    "notice.date_note": "Quoted from the notice as written. This is not a legal deadline set by BizPath; confirm dates with the office that sent it.",
+    "notice.meaning": "What it means for you"
   },
   "hy": {
     "banner": "Հաքաթոնի նախատիպ · Գլենդեյլ քաղաքի պաշտոնական կայք չէ",
@@ -295,7 +301,17 @@
     "answer.loading": "Ստուգում ենք Քաղաքի կանոնները…",
     "answer.matched": "Կիրառված կանոն",
     "answer.link_only": "BizPath-ը դեռ չի ստուգել",
-    "answer.related_declined": "Առնչվող ստուգված պահանջներ (սա ձեր հարցի պատասխանը չէ)"
+    "answer.related_declined": "Առնչվող ստուգված պահանջներ (սա ձեր հարցի պատասխանը չէ)",
+    "notice.use_sample": "Օգտագործել նմուշային ծանուցումը",
+    "notice.code": "Ծանուցման մեջ նշված օրենսգրքի բաժինը",
+    "notice.date": "Ծանուցման մեջ նշված ամսաթիվը կամ ժամկետը",
+    "notice.no_date": "Ամսաթիվ նշված չէ",
+    "notice.date_note": "Մեջբերված է ծանուցումից՝ ինչպես գրված է։ Սա BizPath-ի սահմանած իրավական ժամկետ չէ. ամսաթվերը ճշտեք ծանուցումն ուղարկած գրասենյակի հետ։",
+    "notice.meaning": "Ինչ է սա նշանակում ձեզ համար",
+    "notice.sample": "Նմուշային ծանուցում՝ ցուցադրման համար",
+    "notice.result_title": "Ձեր ծանուցումը՝ բացատրված",
+    "notice.says": "Ծանուցման մեջ ասվում է",
+    "notice.related": "Պահանջը, որին վերաբերում է այս ծանուցումը"
   },
   "es": {
     "banner": "Prototipo de hackatón · no es un sitio oficial de la Ciudad de Glendale",
@@ -441,6 +457,12 @@
     "answer.loading": "Revisando las normas de la Ciudad…",
     "answer.matched": "Regla que se aplicó",
     "answer.link_only": "Aún no verificado por BizPath",
-    "answer.related_declined": "Requisitos verificados relacionados (no son una respuesta a su pregunta)"
+    "answer.related_declined": "Requisitos verificados relacionados (no son una respuesta a su pregunta)",
+    "notice.use_sample": "Usar el aviso de ejemplo",
+    "notice.code": "Sección del código citada en el aviso",
+    "notice.date": "Fecha o plazo en el aviso",
+    "notice.no_date": "No indica fecha",
+    "notice.date_note": "Citado tal como aparece en el aviso. No es un plazo legal fijado por BizPath; confirme las fechas con la oficina que lo envió.",
+    "notice.meaning": "Qué significa para usted"
   }
 }
