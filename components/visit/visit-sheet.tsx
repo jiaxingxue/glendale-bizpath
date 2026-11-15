@@ -1,17 +1,38 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { Mail, Printer, Square } from 'lucide-react'
-import { getBusinessType, getStage, isLinkOnly, permitCenter, requirementsForType } from '@/lib/data'
+import { corpus, getBusinessType, getStage, isLinkOnly, permitCenter, requirementsForType } from '@/lib/data'
+import { recordHandoff } from '@/lib/feedback'
 import { useI18n } from '@/lib/i18n'
 import { EnglishSourceNote } from '@/components/english-source-note'
 
-type VisitSheetProps = { typeId: string | null; stageId: string | null; question: string | null }
+type VisitSheetProps = {
+  typeId: string | null
+  stageId: string | null
+  question: string | null
+  /** Entries from the answer the sheet was opened from; empty means use the business type and stage. */
+  entryIds: string[]
+}
 
-export function VisitSheet({ typeId, stageId, question }: VisitSheetProps) {
-  const { t } = useI18n()
+export function VisitSheet({ typeId, stageId, question, entryIds }: VisitSheetProps) {
+  const { t, lang } = useI18n()
+  const logged = useRef(false)
+
+  // Opening the sheet is a hand-off to City staff; log it once per page view.
+  useEffect(() => {
+    if (logged.current) return
+    logged.current = true
+    recordHandoff({ kind: 'visit', language: lang, business_type: typeId, stage: stageId, time: new Date().toISOString() })
+  }, [lang, typeId, stageId])
+
   const type = typeId ? getBusinessType(typeId) : undefined
   const stage = getStage(stageId ?? undefined)
-  const requirements = requirementsForType(typeId ?? 'other', stageId ?? undefined).filter((req) => !isLinkOnly(req))
+  const source =
+    entryIds.length > 0
+      ? corpus.filter((req) => entryIds.includes(req.id))
+      : requirementsForType(typeId ?? 'other', stageId ?? undefined)
+  const requirements = source.filter((req) => !isLinkOnly(req))
   const documents = Array.from(new Set(requirements.flatMap((req) => req.documents)))
   const fees = requirements.filter((req) => req.fee)
 
@@ -84,6 +105,7 @@ export function VisitSheet({ typeId, stageId, question }: VisitSheetProps) {
 
         <section aria-labelledby="visit-documents" className="flex flex-col gap-3 border-t border-border pt-6">
           <h2 id="visit-documents" className="text-lg">{t('visit.documents')}</h2>
+          {documents.length === 0 && <p className="text-muted-foreground">{t('visit.no_documents')}</p>}
           <ul className="flex flex-col gap-2" lang="en">
             {documents.map((doc) => (
               <li key={doc} className="flex items-start gap-3 leading-relaxed">

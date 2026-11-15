@@ -88,7 +88,12 @@ export function AskHero() {
             question={askState.question}
             answer={askState.answer}
             streaming={askState.status === 'streaming'}
-            visitHref={visitHref({ stage: stageId, question: askState.question })}
+            visitHref={visitHref({
+              type: askState.answer.businessType,
+              stage: stageId ?? askState.answer.stage,
+              question: askState.answer.englishQuestion || askState.question,
+              entries: askState.answer.rows.map((row) => row.requirementId),
+            })}
             onFollowUp={ask}
           />
         )}

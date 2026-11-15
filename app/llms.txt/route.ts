@@ -2,10 +2,9 @@ import { corpus } from '@/lib/data'
 
 export const dynamic = 'force-static'
 
-const PLACEHOLDER_MARKER = /^PLACEHOLDER\.\s*/
 
 function firstSentence(text: string) {
-  const clean = text.replace(PLACEHOLDER_MARKER, '').replace(/\s+/g, ' ').trim()
+  const clean = text.replace(/\s+/g, ' ').trim()
   const match = clean.match(/^.*?[.!?](?=\s|$)/)
   return match ? match[0] : clean
 }

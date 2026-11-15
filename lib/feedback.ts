@@ -61,3 +61,13 @@ export function handleFeedback(record: FeedbackRecord) {
     keepalive: true,
   }).catch((error) => console.error('[feedback]', error))
 }
+
+/** Records a hand-off to City staff (e.g. a visit sheet opened). */
+export function recordHandoff(record: HandoffRecord) {
+  fetch('/api/handoff', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(record),
+    keepalive: true,
+  }).catch((error) => console.error('[handoff]', error))
+}

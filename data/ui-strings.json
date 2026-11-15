@@ -202,7 +202,8 @@
     "notice.date": "Date or deadline in the notice",
     "notice.no_date": "No date stated",
     "notice.date_note": "Quoted from the notice as written. This is not a legal deadline set by BizPath; confirm dates with the office that sent it.",
-    "notice.meaning": "What it means for you"
+    "notice.meaning": "What it means for you",
+    "visit.no_documents": "No documents are listed for these steps. Check each official page."
   },
   "hy": {
     "banner": "Հաքաթոնի նախատիպ · Գլենդեյլ քաղաքի պաշտոնական կայք չէ",
@@ -311,7 +312,8 @@
     "notice.sample": "Նմուշային ծանուցում՝ ցուցադրման համար",
     "notice.result_title": "Ձեր ծանուցումը՝ բացատրված",
     "notice.says": "Ծանուցման մեջ ասվում է",
-    "notice.related": "Պահանջը, որին վերաբերում է այս ծանուցումը"
+    "notice.related": "Պահանջը, որին վերաբերում է այս ծանուցումը",
+    "visit.no_documents": "Այս քայլերի համար փաստաթղթեր նշված չեն։ Ստուգեք յուրաքանչյուր պաշտոնական էջը։"
   },
   "es": {
     "banner": "Prototipo de hackatón · no es un sitio oficial de la Ciudad de Glendale",
@@ -463,6 +465,7 @@
     "notice.date": "Fecha o plazo en el aviso",
     "notice.no_date": "No indica fecha",
     "notice.date_note": "Citado tal como aparece en el aviso. No es un plazo legal fijado por BizPath; confirme las fechas con la oficina que lo envió.",
-    "notice.meaning": "Qué significa para usted"
+    "notice.meaning": "Qué significa para usted",
+    "visit.no_documents": "No hay documentos indicados para estos pasos. Revise cada página oficial."
   }
 }

@@ -39,7 +39,12 @@ export function TypeAskBox({ typeId, stageId }: { typeId: string; stageId: strin
             question={state.question}
             answer={state.answer}
             streaming={state.status === 'streaming'}
-            visitHref={visitHref({ type: typeId, stage: stageId, question: state.question })}
+            visitHref={visitHref({
+              type: typeId,
+              stage: stageId,
+              question: state.answer.englishQuestion || state.question,
+              entries: state.answer.rows.map((row) => row.requirementId),
+            })}
             onFollowUp={ask}
           />
         )}
