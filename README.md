@@ -118,3 +118,7 @@ The Armenian and Spanish text is machine-translated and has not yet been reviewe
 ---
 
 Legal information, not legal advice. Not an official City of Glendale website. Always confirm requirements with the City of Glendale before acting.
+
+## License
+
+The code is released under the MIT License. See [LICENSE](LICENSE).
