@@ -1,10 +1,14 @@
 # Glendale BizPath
 
+![Glendale BizPath home page](docs/home.png)
+
 BizPath answers small-business owners' questions about the permits, licenses and rules that apply to them in Glendale, California, in their own language. Every answer is built only from a hand-checked set of City, County and State requirements, cites its source, and hands the owner off to the right City desk.
 
 **Live:** https://glendale-bizpath.vercel.app
 
 > Legal information, not legal advice. Not an official City of Glendale website.
+
+The requirement data was compiled from public government pages on the dates shown with each entry. The official sources are the authority.
 
 ## Features
 
